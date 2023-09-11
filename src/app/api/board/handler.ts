@@ -76,3 +76,34 @@ export const createBoard = async (
     }
   );
 };
+
+export const getBoard = async (email: string) => {
+  const boards = await prisma.board.findMany({
+    where: {
+      user: {
+        email,
+      },
+    },
+    select: {
+      board_id: true,
+      title: true,
+      columns: {
+        select: {
+          column_id: true,
+          title: true,
+        },
+      },
+    },
+  });
+
+  if (!boards) {
+    return NextResponse.json(
+      {
+        message: "보드를 찾을 수 없습니다.",
+      },
+      { status: StatusCodes.NOT_FOUND }
+    );
+  }
+
+  return NextResponse.json(boards, { status: StatusCodes.OK });
+};

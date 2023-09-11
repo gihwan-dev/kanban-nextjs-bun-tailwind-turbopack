@@ -11,6 +11,7 @@ import { Board } from "@prisma/client";
 import { useAppSelector } from "@/utils/hooks/redux-hooks";
 import Modal from "@/UI/Modal";
 import AddNewTaskModal from "./AddNewTaskModal";
+import SettingModal from "@/UI/SettingModal";
 
 const MainHeadNav: React.FC<{
   data: Pick<Board, "board_id" | "title">[];
@@ -19,6 +20,7 @@ const MainHeadNav: React.FC<{
   const [openSignUpModal, setOpenSignUpModal] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [openAddNewTaskModal, setOpenAddNewTaskModal] = useState(false);
+  const [openSettingsModal, setOpenSettingsModal] = useState(false);
 
   const selectedBoardId = useAppSelector((state) => state.nav.id);
 
@@ -48,6 +50,10 @@ const MainHeadNav: React.FC<{
 
   const closeMenuHandler = () => {
     setOpenMenu(false);
+  };
+
+  const closeSettingModalHandler = () => {
+    setOpenSettingsModal(false);
   };
 
   const getBoardTitle = () => {
@@ -105,16 +111,28 @@ const MainHeadNav: React.FC<{
                       </li>
                     </>
                   ) : (
-                    <li
-                      onClick={async () => {
-                        closeMenuHandler();
-                        await signOut();
-                        router.refresh();
-                      }}
-                      className="cursor-pointer whitespace-nowrap -text--Medium-Grey"
-                    >
-                      Sign out
-                    </li>
+                    <>
+                      <button
+                        onClick={async () => {
+                          closeMenuHandler();
+                          await signOut();
+                          router.refresh();
+                        }}
+                        className="cursor-pointer whitespace-nowrap -text--Medium-Grey"
+                      >
+                        Sign out
+                      </button>
+                      <hr className="w-full" />
+                      <button
+                        onClick={() => {
+                          closeMenuHandler();
+                          setOpenSettingsModal(true);
+                        }}
+                        className="cursor-pointer whitespace-nowrap -text--Medium-Grey"
+                      >
+                        Settings
+                      </button>
+                    </>
                   )}
                   <hr className="w-full" />
                   <button
@@ -147,6 +165,9 @@ const MainHeadNav: React.FC<{
       ) : null}
       {openAddNewTaskModal ? (
         <AddNewTaskModal onClose={() => setOpenAddNewTaskModal(false)} />
+      ) : null}
+      {openSettingsModal ? (
+        <SettingModal onClose={closeSettingModalHandler} />
       ) : null}
     </React.Fragment>
   );
