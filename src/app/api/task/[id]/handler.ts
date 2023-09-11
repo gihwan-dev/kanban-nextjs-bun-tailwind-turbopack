@@ -64,3 +64,33 @@ export const updateTaskState = async (taskId: number, columnId: number) => {
     { status: StatusCodes.OK }
   );
 };
+
+export const deleteTask = async (taskId: number) => {
+  const deleteSubTaskResult = await prisma.subTask.deleteMany({
+    where: {
+      task_id: taskId,
+    },
+  });
+
+  const deleteResult = await prisma.task.delete({
+    where: {
+      task_id: taskId,
+    },
+  });
+
+  if (!deleteResult && !deleteSubTaskResult) {
+    return NextResponse.json(
+      {},
+      {
+        status: StatusCodes.BAD_REQUEST,
+      }
+    );
+  }
+
+  return NextResponse.json(
+    { message: "task 삭제에 성공했습니다" },
+    {
+      status: StatusCodes.ACCEPTED,
+    }
+  );
+};

@@ -8,7 +8,7 @@ import axios, { AxiosResponse } from "axios";
 import { GetColumn } from "../../BodyRoot";
 import { SubTask, Task } from "@prisma/client";
 import { SERVER_URL } from "@/const";
-import ReactDOM from "react-dom";
+import DeleteModal from "@/UI/DeleteModal";
 
 const labelClassName = "font-bold text-xs -text--Medium-Grey";
 
@@ -44,6 +44,8 @@ const TaskModal: React.FC<{
   const [done, setDone] = useState(0);
 
   const [openMenu, setOpenMenu] = useState(false);
+
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -107,88 +109,106 @@ const TaskModal: React.FC<{
     mutateSubTask({ subTaskId: targetId, state: e.target.checked });
   };
 
+  const deleteModalCloseHandler = () => {
+    onClose();
+    setOpenDeleteModal(false);
+  };
+
   return (
-    <Modal onBackdropClick={onClose}>
-      <form className="flex flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md">
-        <header className="flex gap-6 flex-row items-center justify-between">
-          <span className="text-lg -text--Black font-bold">
-            {taskData?.data.title}
-          </span>
-          <button
-            type="button"
-            onClick={() => setOpenMenu(true)}
-            className="cursor-pointer relative"
-          >
-            <EclipsSvg />
-            {openMenu && (
-              <ul
-                className="absolute top-8 -left-20 flex flex-col"
-                onMouseLeave={() => setOpenMenu(false)}
-              >
-                <li className="px-6 py-2 -bg--Red rounded-3xl font-bold -text--White hover:-bg--red-hover">
-                  <button type="button">delete</button>
-                </li>
-              </ul>
-            )}
-          </button>
-        </header>
-        <p className="font-medium -text--Medium-Grey text-sm">
-          {taskData?.data.description}
-        </p>
-        <div className="flex flex-col gap-4">
-          <label className={labelClassName}>
-            Subtasks ({done} of {total})
-          </label>
-          {taskData?.data.subTasks.map((item) => {
-            return (
-              <div
-                className={
-                  "flex flex-row gap-4 p-3 items-center -bg--light-grey-light-bg rounded-md"
-                }
-                key={`${item.title}task with subtask modal`}
-              >
-                <input
-                  type="checkbox"
-                  id={item.title}
-                  onChange={(e) => handleSubTaskChange(e, item.subtask_id)}
-                  defaultChecked={item.state}
-                />
-                <label
-                  htmlFor={item.title}
-                  className={`text-xs "-text--Black" font-bold ${
-                    item.state ? "line-through opacity-50" : ""
-                  }`}
-                >
-                  {item.title}
-                </label>
-              </div>
-            );
-          })}
-        </div>
-        <div className="flex flex-col gap-2">
-          <label className={labelClassName}>Current Status</label>
-          <div className="w-full px-4 py-2  border -border--Medium-Grey rounded-s">
-            <select
-              onChange={handleStatusChange}
-              id="status"
-              defaultValue={taskData?.data.column_id}
-              className="w-full border-none focus:outline-none"
+    <React.Fragment>
+      <Modal onBackdropClick={onClose}>
+        <form className="flex flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md">
+          <header className="flex gap-6 flex-row items-center justify-between">
+            <span className="text-lg -text--Black font-bold">
+              {taskData?.data.title}
+            </span>
+            <div
+              onClick={() => setOpenMenu(true)}
+              className="cursor-pointer relative"
             >
-              {columnData?.data.map((item) => {
-                return (
-                  <option
-                    value={item.column_id}
-                    key={`${item.column_id} ${item.title} tasks modal`}
+              <EclipsSvg />
+              {openMenu && (
+                <ul
+                  className="absolute top-8 -left-20 flex flex-col"
+                  onMouseLeave={() => setOpenMenu(false)}
+                >
+                  <li className="px-6 py-2 -bg--Red rounded-3xl font-bold -text--White hover:-bg--red-hover">
+                    <button
+                      onClick={() => setOpenDeleteModal(true)}
+                      type="button"
+                    >
+                      delete
+                    </button>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </header>
+          <p className="font-medium -text--Medium-Grey text-sm">
+            {taskData?.data.description}
+          </p>
+          <div className="flex flex-col gap-4">
+            <label className={labelClassName}>
+              Subtasks ({done} of {total})
+            </label>
+            {taskData?.data.subTasks.map((item) => {
+              return (
+                <div
+                  className={
+                    "flex flex-row gap-4 p-3 items-center -bg--light-grey-light-bg rounded-md"
+                  }
+                  key={`${item.title}task with subtask modal`}
+                >
+                  <input
+                    type="checkbox"
+                    id={item.title}
+                    onChange={(e) => handleSubTaskChange(e, item.subtask_id)}
+                    defaultChecked={item.state}
+                  />
+                  <label
+                    htmlFor={item.title}
+                    className={`text-xs "-text--Black" font-bold ${
+                      item.state ? "line-through opacity-50" : ""
+                    }`}
                   >
                     {item.title}
-                  </option>
-                );
-              })}
-            </select>
+                  </label>
+                </div>
+              );
+            })}
           </div>
-        </div>
-      </form>
-    </Modal>
+          <div className="flex flex-col gap-2">
+            <label className={labelClassName}>Current Status</label>
+            <div className="w-full px-4 py-2  border -border--Medium-Grey rounded-s">
+              <select
+                onChange={handleStatusChange}
+                id="status"
+                defaultValue={taskData?.data.column_id}
+                className="w-full border-none focus:outline-none"
+              >
+                {columnData?.data.map((item) => {
+                  return (
+                    <option
+                      value={item.column_id}
+                      key={`${item.column_id} ${item.title} tasks modal`}
+                    >
+                      {item.title}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+        </form>
+      </Modal>
+      {openDeleteModal && (
+        <DeleteModal
+          id={taskId}
+          type="task"
+          onClose={deleteModalCloseHandler}
+        />
+      )}
+    </React.Fragment>
   );
 };
 

@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import TaskModal, { getTaskAxios } from "./TaskModal";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAppSelector } from "@/utils/hooks/redux-hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 const BodyColumnItem: React.FC<{
   taskId: number;
@@ -12,8 +11,6 @@ const BodyColumnItem: React.FC<{
   done: number;
 }> = ({ taskId, title, total, done }) => {
   const [openModal, setOpenModal] = useState(false);
-
-  const boardId = useAppSelector((state) => state.nav.id);
 
   const queryClient = useQueryClient();
 
