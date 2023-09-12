@@ -1,13 +1,13 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import EclipsSvg from "./SvgComponent/EclipsSvg";
 import LoginForm from "../auth/LoginForm";
 import SignUpForm from "../auth/SignupForm";
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
-import {Board} from "@prisma/client";
-import {useAppSelector} from "@/utils/hooks/redux-hooks";
+import { signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { Board } from "@prisma/client";
+import { useAppSelector } from "@/utils/hooks/redux-hooks";
 import Modal from "@/UI/Modal";
 import AddNewTaskModal from "./AddNewTaskModal";
 import SettingModal from "@/components/SettingModal";
@@ -21,7 +21,7 @@ const MainHeadNav: React.FC<{
   const [openAddNewTaskModal, setOpenAddNewTaskModal] = useState(false);
   const [openSettingsModal, setOpenSettingsModal] = useState(false);
 
-  const selectedBoardId = useAppSelector((state) => state.nav.id);
+  const selectedBoardId = useAppSelector(state => state.nav.id);
 
   const session = useSession();
 
@@ -56,7 +56,7 @@ const MainHeadNav: React.FC<{
   };
 
   const getBoardTitle = () => {
-    const board = data.find((item) => item.board_id === selectedBoardId);
+    const board = data.find(item => item.board_id === selectedBoardId);
     if (!board) {
       return "";
     }
@@ -84,7 +84,7 @@ const MainHeadNav: React.FC<{
               <Modal onBackdropClick={() => setOpenMenu(false)}>
                 <ul
                   id="menu"
-                  className="w-72 absolute px-4 py-4 -bg--White font-bold flex flex-col items-center gap-2 -translate-x-1/2 -translate-y-1/2 rounded-md"
+                  className="w-72 top-1/2 left-1/2 absolute px-4 py-4 -bg--White font-bold flex flex-col items-center gap-2 -translate-x-1/2 -translate-y-1/2 rounded-md"
                 >
                   <header>Menu</header>
                   <hr className="w-full" />

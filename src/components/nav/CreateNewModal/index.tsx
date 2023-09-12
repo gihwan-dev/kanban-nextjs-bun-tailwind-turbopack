@@ -52,14 +52,14 @@ const CreateNewBoardModal: React.FC<{
   const router = useRouter();
 
   const onAddColumnHandler = () => {
-    setColumns((prev) => {
+    setColumns(prev => {
       const newColumns = [...prev, ""];
       return newColumns;
     });
   };
 
   const removeColumnHandler = (index: number) => {
-    setColumns((prev) => {
+    setColumns(prev => {
       const newColumns = prev.filter((_, i) => i !== index);
       return newColumns;
     });
@@ -70,7 +70,7 @@ const CreateNewBoardModal: React.FC<{
       return false;
     }
 
-    if (!targetColumns.every((column) => column.trim().length !== 0)) {
+    if (!targetColumns.every(column => column.trim().length !== 0)) {
       return false;
     }
 
@@ -108,7 +108,7 @@ const CreateNewBoardModal: React.FC<{
     <Modal onBackdropClick={() => onClose()}>
       <form
         onSubmit={onSubmitHandler}
-        className="p-8 flex flex-col gap-6 -translate-x-1/2 -translate-y-1/2 -bg--White rounded-md w-11/12 max-w-lg"
+        className="absolute top-1/2 left-1/2 p-8 flex flex-col gap-6 -translate-x-1/2 -translate-y-1/2 -bg--White rounded-md w-11/12 max-w-lg"
       >
         <header className="font-bold text-lg">Add New Board</header>
 

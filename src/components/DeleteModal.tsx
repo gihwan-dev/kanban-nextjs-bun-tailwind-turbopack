@@ -1,7 +1,7 @@
 "use client";
 
 import { SERVER_URL } from "@/const";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import React from "react";
 import Modal from "../UI/Modal";
@@ -16,15 +16,19 @@ const DeleteModal: React.FC = () => {
   const deleteModalState = useAppSelector(state => state.delete);
   const id = deleteModalState.id as number;
   const type = deleteModalState.type as "board" | "column" | "task";
+  const open = deleteModalState.open;
 
   const dispatch = useAppDispatch();
+
+  const queryClient = useQueryClient();
 
   const { mutate } = useMutation({
     mutationKey: ["delete", type, id],
     mutationFn: () => deleteAxios(id, type),
     onSuccess: () => {
-      window.alert(`${type} deleted!`);
+      queryClient.invalidateQueries(["boards"]);
       dispatch(setCloseModal());
+      window.alert(`${type} deleted!`);
     },
   });
 
@@ -35,15 +39,14 @@ const DeleteModal: React.FC = () => {
 
   return (
     <>
-      {deleteModalState.open ? (
+      {open ? (
         <Modal
           onBackdropClick={() => {
             dispatch(setCloseModal());
-            console.log(deleteModalState.open);
           }}
         >
           <form
-            className="flex flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md"
+            className="absolute flex top-1/2 left-1/2 flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md"
             onSubmit={onClickHandler}
           >
             <header className="-text--Red font-bold">
@@ -72,9 +75,7 @@ const DeleteModal: React.FC = () => {
             </footer>
           </form>
         </Modal>
-      ) : (
-        <div></div>
-      )}
+      ) : null}
     </>
   );
 };

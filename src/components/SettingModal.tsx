@@ -3,9 +3,15 @@
 import axios from "axios";
 import Modal from "../UI/Modal";
 import { SERVER_URL } from "@/const";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { GetBoardResponse } from "@/app/api/board/route";
 import React, { useMemo, useState } from "react";
+import { useAppDispatch } from "@/utils/hooks/redux-hooks";
+import {
+  DeleteModalState,
+  setDeleteModal,
+  setOpenModal,
+} from "@/utils/redux/slices/deleteModal-slice";
 
 const getBoardAxios = () => {
   return axios.get<GetBoardResponse[]>(`${SERVER_URL}/board`);
@@ -27,30 +33,24 @@ const SettingModalItem: React.FC<{
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { mutate: mutateBoard } = useMutation({
-    mutationKey: ["boards", "delete"],
-    mutationFn: (id: number) => deleteBoardAxios(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["boards"]);
-      window.alert("성공적으로 보드가 삭제되었습니다.");
-    },
-  });
-
-  const { mutate: mutateColumn } = useMutation({
-    mutationKey: ["column", "delete"],
-    mutationFn: (id: number) => deleteColumAxios(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["boards"]);
-      window.alert("성공적으로 칼럼이 삭제되었습니다.");
-    },
-  });
+  const dispatch = useAppDispatch();
 
   const onDeleteBoardHandler = () => {
-    mutateBoard(boardId);
+    const deleteState: Pick<DeleteModalState, "type" | "id"> = {
+      id: boardId,
+      type: "board",
+    };
+    dispatch(setDeleteModal(deleteState));
+    dispatch(setOpenModal());
   };
 
   const onDeleteColumnHandler = (columnId: number) => {
-    mutateColumn(columnId);
+    const deleteState: Pick<DeleteModalState, "type" | "id"> = {
+      id: columnId,
+      type: "column",
+    };
+    dispatch(setDeleteModal(deleteState));
+    dispatch(setOpenModal());
   };
 
   const onClickHandler = () => {
@@ -116,7 +116,7 @@ const SettingModal: React.FC<{
 
   return (
     <Modal onBackdropClick={onCloseHandler}>
-      <div className="flex flex-col gap-6 px-8 py-8 -bg--White w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg">
+      <div className="absolute flex top-1/2 left-1/2 flex-col gap-6 px-8 py-8 -bg--White w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg">
         <header className={"-text--Black font-bold text-xl"}>Settings</header>
         <main className="flex flex-col gap-2 max-h-96 overflow-auto">
           {data?.data.map(item => {

@@ -16,15 +16,23 @@ export const deleteModalSlice = createSlice({
   name: "delete",
   initialState,
   reducers: {
-    setDeleteModal: (state, action: PayloadAction<DeleteModalState>) => {
-      state = action.payload;
+    setDeleteModal: (
+      state,
+      action: PayloadAction<Pick<DeleteModalState, "id" | "type">>,
+    ) => {
+      state.type = action.payload.type;
+      state.id = action.payload.id;
     },
     setCloseModal: state => {
       state.open = false;
     },
+    setOpenModal: state => {
+      state.open = true;
+    },
   },
 });
 
-export const { setDeleteModal, setCloseModal } = deleteModalSlice.actions;
+export const { setDeleteModal, setCloseModal, setOpenModal } =
+  deleteModalSlice.actions;
 
 export default deleteModalSlice.reducer;

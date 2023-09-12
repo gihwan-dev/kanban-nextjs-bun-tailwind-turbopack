@@ -11,6 +11,7 @@ import { SERVER_URL } from "@/const";
 import {
   DeleteModalState,
   setDeleteModal,
+  setOpenModal,
 } from "@/utils/redux/slices/deleteModal-slice";
 
 const labelClassName = "font-bold text-xs -text--Medium-Grey";
@@ -52,6 +53,7 @@ const TaskModal: React.FC<{
 
   const selectedBoardId = useAppSelector(state => state.nav.id);
 
+  const deleteState = useAppSelector(state => state.delete);
   const dispatch = useAppDispatch();
 
   const { data: columnData } = useQuery<AxiosResponse<GetColumn[]>>([
@@ -113,19 +115,18 @@ const TaskModal: React.FC<{
   };
 
   const onDeleteHandler = () => {
-    const deleteModalState: DeleteModalState = {
+    const deleteModalState: Pick<DeleteModalState, "id" | "type"> = {
       id: taskId,
       type: "task",
-      open: true,
     };
     dispatch(setDeleteModal(deleteModalState));
-    console.log(deleteModalState);
+    dispatch(setOpenModal());
   };
 
   return (
     <React.Fragment>
       <Modal onBackdropClick={onClose}>
-        <form className="flex flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md">
+        <form className="flex absolute top-1/2 left-1/2 flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md">
           <header className="flex gap-6 flex-row items-center justify-between">
             <span className="text-lg -text--Black font-bold">
               {taskData?.data.title}

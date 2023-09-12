@@ -62,9 +62,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
                 <MainHeadNav data={data} />
                 {children}
               </div>
-              <div className={"absolute z-50 top-0 left-0 w-full h-full"}>
-                <DeleteModal />
-              </div>
+              <DeleteModal />
             </ReduxProvider>
           </MySessionProvider>
         </MyQueryProvider>

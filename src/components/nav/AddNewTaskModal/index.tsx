@@ -29,7 +29,7 @@ const AddNewTaskModal: React.FC<{
 }> = ({ onClose }) => {
   const [subTasks, setSubTasks] = useState<string[]>([""]);
 
-  const boardId = useAppSelector((state) => state.nav.id);
+  const boardId = useAppSelector(state => state.nav.id);
 
   const { data } = useQuery<AxiosResponse<GetColumn[]>>(["columns", boardId]);
 
@@ -42,14 +42,14 @@ const AddNewTaskModal: React.FC<{
   });
 
   const onAddSubtaskHandler = () => {
-    setSubTasks((prev) => {
+    setSubTasks(prev => {
       const newSubTasks = [...prev, ""];
       return newSubTasks;
     });
   };
 
   const onRemoveSubtaskHandler = (index: number) => {
-    setSubTasks((prev) => {
+    setSubTasks(prev => {
       const newSubTasks = prev.filter((_, i) => i !== index);
       return newSubTasks;
     });
@@ -89,7 +89,7 @@ const AddNewTaskModal: React.FC<{
     <Modal onBackdropClick={onClose}>
       <form
         onSubmit={onSubmitHandler}
-        className="p-8 flex flex-col gap-6 -translate-x-1/2 -translate-y-1/2 -bg--White rounded-md w-11/12 max-w-lg"
+        className="absolute top-1/2 left-1/2 p-8 flex flex-col gap-6 -translate-x-1/2 -translate-y-1/2 -bg--White rounded-md w-11/12 max-w-lg"
       >
         <header className="text-lg font-bold -text--Black">Add New Task</header>
         <div className="flex flex-col gap-2">
@@ -167,7 +167,7 @@ const AddNewTaskModal: React.FC<{
               defaultValue={data?.data[0].column_id}
               className="w-full border-none focus:outline-none"
             >
-              {data?.data?.map((item) => {
+              {data?.data?.map(item => {
                 return (
                   <option
                     value={item.column_id}
