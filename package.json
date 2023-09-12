@@ -37,6 +37,8 @@
   },
   "devDependencies": {
     "@types/randomcolor": "^0.5.7",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
     "prisma": "^5.2.0"
   }
 }

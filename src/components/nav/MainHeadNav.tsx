@@ -1,17 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, {useState} from "react";
 import EclipsSvg from "./SvgComponent/EclipsSvg";
 import LoginForm from "../auth/LoginForm";
-import React from "react";
 import SignUpForm from "../auth/SignupForm";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { Board } from "@prisma/client";
-import { useAppSelector } from "@/utils/hooks/redux-hooks";
+import {signOut, useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
+import {Board} from "@prisma/client";
+import {useAppSelector} from "@/utils/hooks/redux-hooks";
 import Modal from "@/UI/Modal";
 import AddNewTaskModal from "./AddNewTaskModal";
-import SettingModal from "@/UI/SettingModal";
+import SettingModal from "@/components/SettingModal";
 
 const MainHeadNav: React.FC<{
   data: Pick<Board, "board_id" | "title">[];

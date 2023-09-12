@@ -11,54 +11,51 @@ datasource db {
 }
 
 model SubTask {
-  subtask_id       Int        @id @default(autoincrement())
-  title            String     @default("")
-  state            Boolean    @default(false)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  task_id          Int
-  task             Task       @relation(fields: [task_id], references: [task_id])
+  subtask_id Int      @id @default(autoincrement())
+  title      String   @default("")
+  state      Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  task_id    Int
+  task       Task     @relation(fields: [task_id], references: [task_id], onDelete: Cascade)
 }
 
 model Task {
-  task_id       Int        @id @default(autoincrement())
-  title         String     @default("")
-  description   String     @default("")
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  subTasks      SubTask[]
-  column_id     Int
-  column        Column     @relation(fields: [column_id], references: [column_id])
+  task_id     Int       @id @default(autoincrement())
+  title       String    @default("")
+  description String    @default("")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  subTasks    SubTask[]
+  column_id   Int
+  column      Column    @relation(fields: [column_id], references: [column_id], onDelete: Cascade)
 }
 
 model Column {
-  column_id        Int      @id @default(autoincrement())
-  title       String      @default("")
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  tasks       Task[]
-  board_id    Int
-  board       Board       @relation(fields: [board_id], references: [board_id])
+  column_id Int      @id @default(autoincrement())
+  title     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
+  board_id  Int
+  board     Board    @relation(fields: [board_id], references: [board_id], onDelete: Cascade)
 }
 
 model Board {
-  board_id       Int       @id @default(autoincrement())
-  title          String    @default("")
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  columns        Column[]
-  user_id        Int
-  user           User      @relation(fields: [user_id], references: [id])
+  board_id  Int      @id @default(autoincrement())
+  title     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  columns   Column[]
+  user_id   Int
+  user      User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
 
-
-
-
 model User {
-  id          Int       @id @default(autoincrement())
-  email       String    @unique
-  password    String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  boards      Board[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  boards    Board[]
 }

@@ -13,7 +13,7 @@ export const getTask = async (columnId: number) => {
     },
   });
 
-  const dataPromise = task.map(async (task) => {
+  const dataPromise = task.map(async task => {
     const total = await prisma.subTask.count({
       where: {
         task_id: task.task_id,
@@ -38,4 +38,32 @@ export const getTask = async (columnId: number) => {
   return NextResponse.json(data, {
     status: StatusCodes.OK,
   });
+};
+
+export const deleteColumn = async (columnId: number) => {
+  const deleteColumn = await prisma.column.delete({
+    where: {
+      column_id: columnId,
+    },
+  });
+
+  if (!deleteColumn) {
+    return NextResponse.json(
+      {
+        message: "칼럼 삭제에 실패했습니다.",
+      },
+      {
+        status: StatusCodes.INTERNAL_SERVER_ERROR,
+      },
+    );
+  }
+
+  return NextResponse.json(
+    {
+      message: "칼럼 삭제에 성공했습니다.",
+    },
+    {
+      status: StatusCodes.OK,
+    },
+  );
 };

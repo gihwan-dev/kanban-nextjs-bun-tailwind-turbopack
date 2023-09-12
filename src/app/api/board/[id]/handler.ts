@@ -20,11 +20,28 @@ export const getColumns = async (boardId: number) => {
       },
       {
         status: StatusCodes.NOT_FOUND,
-      }
+      },
     );
   }
 
   return NextResponse.json(columns, {
     status: StatusCodes.OK,
   });
+};
+
+export const deleteBoards = async (boardId: number) => {
+  const deleteResult = await prisma.board.delete({
+    where: {
+      board_id: boardId,
+    },
+  });
+
+  console.log(deleteResult);
+
+  return NextResponse.json(
+    {},
+    {
+      status: StatusCodes.OK,
+    },
+  );
 };

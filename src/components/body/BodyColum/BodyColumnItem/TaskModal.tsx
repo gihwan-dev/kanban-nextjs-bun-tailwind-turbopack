@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 
 import EclipsSvg from "@/components/nav/SvgComponent/EclipsSvg";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAppSelector } from "@/utils/hooks/redux-hooks";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks/redux-hooks";
 import axios, { AxiosResponse } from "axios";
 import { GetColumn } from "../../BodyRoot";
-import { SubTask, Task } from "@prisma/client";
+import { SubTask } from "@prisma/client";
 import { SERVER_URL } from "@/const";
-import DeleteModal from "@/UI/DeleteModal";
+import {
+  DeleteModalState,
+  setDeleteModal,
+} from "@/utils/redux/slices/deleteModal-slice";
 
 const labelClassName = "font-bold text-xs -text--Medium-Grey";
 
@@ -45,11 +48,11 @@ const TaskModal: React.FC<{
 
   const [openMenu, setOpenMenu] = useState(false);
 
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
   const queryClient = useQueryClient();
 
-  const selectedBoardId = useAppSelector((state) => state.nav.id);
+  const selectedBoardId = useAppSelector(state => state.nav.id);
+
+  const dispatch = useAppDispatch();
 
   const { data: columnData } = useQuery<AxiosResponse<GetColumn[]>>([
     "columns",
@@ -97,21 +100,26 @@ const TaskModal: React.FC<{
   // TODO : 커스텀 체크박스 만들어야 함.
 
   const handleStatusChange = async (
-    e: React.ChangeEvent<HTMLSelectElement>
+    e: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     mutate({ taskId, columnId: Number(e.target.value) });
   };
 
   const handleSubTaskChange = async (
     e: React.ChangeEvent<HTMLInputElement>,
-    targetId: number
+    targetId: number,
   ) => {
     mutateSubTask({ subTaskId: targetId, state: e.target.checked });
   };
 
-  const deleteModalCloseHandler = () => {
-    onClose();
-    setOpenDeleteModal(false);
+  const onDeleteHandler = () => {
+    const deleteModalState: DeleteModalState = {
+      id: taskId,
+      type: "task",
+      open: true,
+    };
+    dispatch(setDeleteModal(deleteModalState));
+    console.log(deleteModalState);
   };
 
   return (
@@ -133,10 +141,7 @@ const TaskModal: React.FC<{
                   onMouseLeave={() => setOpenMenu(false)}
                 >
                   <li className="px-6 py-2 -bg--Red rounded-3xl font-bold -text--White hover:-bg--red-hover">
-                    <button
-                      onClick={() => setOpenDeleteModal(true)}
-                      type="button"
-                    >
+                    <button onClick={onDeleteHandler} type="button">
                       delete
                     </button>
                   </li>
@@ -151,7 +156,7 @@ const TaskModal: React.FC<{
             <label className={labelClassName}>
               Subtasks ({done} of {total})
             </label>
-            {taskData?.data.subTasks.map((item) => {
+            {taskData?.data.subTasks.map(item => {
               return (
                 <div
                   className={
@@ -162,7 +167,7 @@ const TaskModal: React.FC<{
                   <input
                     type="checkbox"
                     id={item.title}
-                    onChange={(e) => handleSubTaskChange(e, item.subtask_id)}
+                    onChange={e => handleSubTaskChange(e, item.subtask_id)}
                     defaultChecked={item.state}
                   />
                   <label
@@ -186,7 +191,7 @@ const TaskModal: React.FC<{
                 defaultValue={taskData?.data.column_id}
                 className="w-full border-none focus:outline-none"
               >
-                {columnData?.data.map((item) => {
+                {columnData?.data.map(item => {
                   return (
                     <option
                       value={item.column_id}
@@ -201,13 +206,6 @@ const TaskModal: React.FC<{
           </div>
         </form>
       </Modal>
-      {openDeleteModal && (
-        <DeleteModal
-          id={taskId}
-          type="task"
-          onClose={deleteModalCloseHandler}
-        />
-      )}
     </React.Fragment>
   );
 };

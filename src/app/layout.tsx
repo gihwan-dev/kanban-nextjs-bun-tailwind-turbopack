@@ -9,6 +9,8 @@ import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { Board } from "prisma/prisma-client";
 import MyQueryProvider from "@/utils/providers/react-query-provider";
+import DeleteModal from "@/components/DeleteModal";
+
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -54,9 +56,14 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <MySessionProvider session={session}>
             <ReduxProvider>
               <MainSideNav data={data} />
-              <div className={`flex flex-col w-full h-full overflow-auto`}>
+              <div
+                className={`relative flex flex-col w-full h-full overflow-auto`}
+              >
                 <MainHeadNav data={data} />
                 {children}
+              </div>
+              <div className={"absolute z-50 top-0 left-0 w-full h-full"}>
+                <DeleteModal />
               </div>
             </ReduxProvider>
           </MySessionProvider>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getColumns } from "./handler";
+import { deleteBoards, getColumns } from "./handler";
 import { StatusCodes } from "http-status-codes";
 import { Params } from "@/types";
 
@@ -13,7 +13,11 @@ export const GET = async (req: NextRequest, { params }: Params) => {
       },
       {
         status: StatusCodes.INTERNAL_SERVER_ERROR,
-      }
+      },
     );
   }
+};
+
+export const DELETE = async (req: NextRequest, { params }: Params) => {
+  return await deleteBoards(Number(params.id));
 };
