@@ -56,13 +56,11 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <MySessionProvider session={session}>
             <ReduxProvider>
               <MainSideNav data={data} />
-              <div
-                className={`relative flex flex-col w-full h-full overflow-auto`}
-              >
+              <div className={`flex flex-col w-full h-full overflow-auto`}>
                 <MainHeadNav data={data} />
                 {children}
+                <DeleteModal />
               </div>
-              <DeleteModal />
             </ReduxProvider>
           </MySessionProvider>
         </MyQueryProvider>

@@ -26,7 +26,7 @@ const AddColumnModal: React.FC<{
 
   const queryClient = useQueryClient();
 
-  const boardId = useAppSelector((state) => state.nav.id);
+  const boardId = useAppSelector(state => state.nav.id);
 
   const { mutate, isSuccess } = useMutation({
     mutationKey: ["createNewColumns", boardId],
@@ -37,14 +37,14 @@ const AddColumnModal: React.FC<{
   });
 
   const onAddColumnHandler = () => {
-    setColumns((prev) => {
+    setColumns(prev => {
       const newColumns = [...prev, ""];
       return newColumns;
     });
   };
 
   const removeColumnHandler = (index: number) => {
-    setColumns((prev) => {
+    setColumns(prev => {
       const newColumns = prev.filter((_, i) => i !== index);
       return newColumns;
     });
@@ -72,7 +72,7 @@ const AddColumnModal: React.FC<{
     <Modal onBackdropClick={onClose}>
       <form
         onSubmit={onSubmitHandler}
-        className="p-8 flex flex-col gap-6 -translate-x-1/2 -translate-y-1/2 -bg--White rounded-md w-11/12 max-w-lg"
+        className="p-8 flex flex-col gap-6 -bg--White rounded-md w-screen max-w-lg"
       >
         <header className="text-xl font-bold">Add New Column</header>
         <label

@@ -126,7 +126,7 @@ const TaskModal: React.FC<{
   return (
     <React.Fragment>
       <Modal onBackdropClick={onClose}>
-        <form className="flex absolute top-1/2 left-1/2 flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md">
+        <form className="flex flex-col gap-6 -bg--White w-screen max-w-lg p-8 rounded-md">
           <header className="flex gap-6 flex-row items-center justify-between">
             <span className="text-lg -text--Black font-bold">
               {taskData?.data.title}

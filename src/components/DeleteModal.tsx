@@ -46,7 +46,7 @@ const DeleteModal: React.FC = () => {
           }}
         >
           <form
-            className="absolute flex top-1/2 left-1/2 flex-col gap-6 -bg--White -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-lg p-8 rounded-md"
+            className="flex flex-col gap-6 -bg--White w-screen max-w-lg p-8 rounded-md"
             onSubmit={onClickHandler}
           >
             <header className="-text--Red font-bold">

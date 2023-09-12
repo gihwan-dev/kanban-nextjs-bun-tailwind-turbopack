@@ -5,8 +5,7 @@ import React from "react";
 const Modal: React.FC<{
   children: React.ReactNode;
   onBackdropClick: () => void;
-  zIndex?: number;
-}> = ({ children, onBackdropClick, zIndex }) => {
+}> = ({ children, onBackdropClick }) => {
   return (
     <React.Fragment>
       <div
@@ -14,7 +13,13 @@ const Modal: React.FC<{
         className="absolute top-0 left-0 w-screen h-screen -bg--Medium-Grey opacity-30"
       />
 
-      {children}
+      <div
+        className={
+          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        }
+      >
+        {children}
+      </div>
     </React.Fragment>
   );
 };

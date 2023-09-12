@@ -116,7 +116,7 @@ const SettingModal: React.FC<{
 
   return (
     <Modal onBackdropClick={onCloseHandler}>
-      <div className="absolute flex top-1/2 left-1/2 flex-col gap-6 px-8 py-8 -bg--White w-11/12 max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg">
+      <div className="flex flex-col gap-6 px-8 py-8 -bg--White w-screen max-w-lg rounded-lg">
         <header className={"-text--Black font-bold text-xl"}>Settings</header>
         <main className="flex flex-col gap-2 max-h-96 overflow-auto">
           {data?.data.map(item => {
