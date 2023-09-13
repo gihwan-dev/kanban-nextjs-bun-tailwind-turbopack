@@ -17,9 +17,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} flex flex-row w-screen h-screen overflow-hidden`}
-      >
+      <body className={`${inter.className} overflow-hidden w-screen h-screen`}>
         <MyQueryProvider>
           <MySessionProvider session={session}>{children}</MySessionProvider>
         </MyQueryProvider>
