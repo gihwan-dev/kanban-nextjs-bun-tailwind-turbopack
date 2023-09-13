@@ -5,7 +5,7 @@ import TaskModal, { getTaskAxios } from "./TaskModal";
 import { useQueryClient } from "@tanstack/react-query";
 
 const BodyColumnItem: React.FC<{
-  taskId: number;
+  taskId?: number;
   title: string;
   total: number;
   done: number;
@@ -34,12 +34,7 @@ const BodyColumnItem: React.FC<{
           {done} of {total} subtasks
         </p>
       </div>
-      {openModal && (
-        <TaskModal
-          taskId={taskId}
-          onClose={closeModalHandler}
-        />
-      )}
+      {openModal && <TaskModal taskId={taskId} onClose={closeModalHandler} />}
     </React.Fragment>
   );
 };

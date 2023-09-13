@@ -8,9 +8,10 @@ import Image from "next/image";
 
 import DeleteIcon from "@/public/assets/icon-cross.svg";
 import { useAppSelector } from "@/utils/hooks/redux-hooks";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { SERVER_URL } from "@/const";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GetColumn } from "@/components/body/BodyRoot";
 
 const createNewColumnsAxios = (boardId: number, columns: string[]) => {
   return axios.post(`${SERVER_URL}/column`, {
@@ -31,6 +32,15 @@ const AddColumnModal: React.FC<{
   const { mutate, isSuccess } = useMutation({
     mutationKey: ["createNewColumns", boardId],
     mutationFn: (columns: string[]) => createNewColumnsAxios(boardId, columns),
+    onMutate: data => {
+      queryClient.setQueriesData(["columns", boardId], old => {
+        const updateData = data.map(item => ({ column_id: 0, title: item }));
+        const newData = old as AxiosResponse<GetColumn[]>;
+        newData.data = [...newData.data, ...updateData];
+        return newData;
+      });
+      onClose();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(["columns", boardId]);
     },
@@ -62,12 +72,6 @@ const AddColumnModal: React.FC<{
 
     mutate(targetColumns);
   };
-
-  if (isSuccess) {
-    window.alert("column 생성에 성공했습니다.");
-    onClose();
-  }
-
   return (
     <Modal onBackdropClick={onClose}>
       <form

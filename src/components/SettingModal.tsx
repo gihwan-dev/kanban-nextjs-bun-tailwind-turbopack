@@ -12,6 +12,7 @@ import {
   setDeleteModal,
   setOpenModal,
 } from "@/utils/redux/slices/deleteModal-slice";
+import { useRouter } from "next/navigation";
 
 const getBoardAxios = () => {
   return axios.get<GetBoardResponse[]>(`${SERVER_URL}/board`);
@@ -105,6 +106,8 @@ const SettingModalItem: React.FC<{
 const SettingModal: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
+  const router = useRouter();
+
   const { data } = useQuery({
     queryKey: ["boards"],
     queryFn: getBoardAxios,
@@ -112,6 +115,7 @@ const SettingModal: React.FC<{
 
   const onCloseHandler = () => {
     onClose();
+    router.refresh();
   };
 
   return (
@@ -132,7 +136,7 @@ const SettingModal: React.FC<{
         </main>
         <footer>
           <button
-            onClick={onClose}
+            onClick={onCloseHandler}
             className={
               "w-full text-center -bg--Red py-2 rounded-3xl -text--White font-bold hover:-bg--red-hover"
             }

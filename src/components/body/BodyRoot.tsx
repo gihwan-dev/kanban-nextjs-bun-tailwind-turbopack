@@ -5,18 +5,20 @@ import BodyColumn from "./BodyColum/BodyColumn";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/utils/hooks/redux-hooks";
-import { Column } from "@prisma/client";
 import React, { useState } from "react";
 import AddColumnModal from "./AddColumnModal";
 
-export type GetColumn = Pick<Column, "column_id" | "title">;
+export type GetColumn = {
+  column_id?: number;
+  title: string;
+};
 
 const columnsAxios = (boardId: number) => {
   return axios.get<GetColumn[]>(`${SERVER_URL}/board/${boardId}`);
 };
 
 const BodyRoot = () => {
-  const selectedBoardId = useAppSelector((state) => state.nav.id);
+  const selectedBoardId = useAppSelector(state => state.nav.id);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -33,7 +35,7 @@ const BodyRoot = () => {
 
   return (
     <React.Fragment>
-      {data?.data.map((item) => {
+      {data?.data.map(item => {
         return (
           <BodyColumn
             key={`${item.column_id} body column`}

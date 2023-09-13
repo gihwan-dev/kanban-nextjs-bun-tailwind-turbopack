@@ -12,6 +12,7 @@ import { useAppSelector } from "@/utils/hooks/redux-hooks";
 import { GetColumn } from "@/components/body/BodyRoot";
 import axios, { AxiosResponse } from "axios";
 import { SERVER_URL } from "@/const";
+import { GetColumnsTaskDto } from "../../body/BodyColum/BodyColumn";
 
 export type AddNewTaskDto = {
   title: string;
@@ -39,6 +40,17 @@ const AddNewTaskModal: React.FC<{
     mutationFn: (addNewTaskDto: AddNewTaskDto) =>
       addNewTaskAxios(addNewTaskDto),
     mutationKey: ["addNewTask", boardId],
+    onMutate: data => {
+      queryClient.setQueryData(["tasks", data.columnId], old => {
+        const updateData = old as AxiosResponse<GetColumnsTaskDto[]>;
+        updateData.data = [
+          ...updateData.data,
+          { title: data.title, total: 0, done: 0 },
+        ];
+        return updateData;
+      });
+      onClose();
+    },
   });
 
   const onAddSubtaskHandler = () => {
@@ -80,7 +92,6 @@ const AddNewTaskModal: React.FC<{
       onSuccess: () => {
         queryClient.invalidateQueries(["tasks", Number(columnId.value)]);
         window.alert("task 생성에 성공했습니다.");
-        onClose();
       },
     });
   };

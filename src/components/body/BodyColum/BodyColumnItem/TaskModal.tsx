@@ -24,7 +24,10 @@ export type GetTaskDto = {
   subTasks: Pick<SubTask, "state" | "title" | "subtask_id">[];
 };
 
-export const getTaskAxios = (taskId: number) => {
+export const getTaskAxios = (taskId: number | undefined) => {
+  if (!taskId) {
+    throw new Error("잘못된 입력입니다.");
+  }
   return axios.get<GetTaskDto>(`${SERVER_URL}/task/${taskId}`);
 };
 
@@ -34,14 +37,17 @@ const updateSubTaskAxios = (subTaskId: number, state: boolean) => {
   });
 };
 
-const updateTaskStateAxios = (taskId: number, columnId: number) => {
+const updateTaskStateAxios = (taskId?: number, columnId?: number) => {
+  if (!taskId || !columnId) {
+    throw new Error("잘못된 입력입니다.");
+  }
   return axios.patch<{ columnId: number }>(`${SERVER_URL}/task/${taskId}`, {
     columnId,
   });
 };
 
 const TaskModal: React.FC<{
-  taskId: number;
+  taskId?: number;
   onClose: () => void;
 }> = ({ taskId, onClose }) => {
   const [total, setTotal] = useState(0);
@@ -78,8 +84,13 @@ const TaskModal: React.FC<{
 
   const { mutate } = useMutation({
     mutationKey: ["updateTaskState", taskId],
-    mutationFn: ({ taskId, columnId }: { taskId: number; columnId: number }) =>
-      updateTaskStateAxios(taskId, columnId),
+    mutationFn: ({
+      taskId,
+      columnId,
+    }: {
+      taskId: number | undefined;
+      columnId: number;
+    }) => updateTaskStateAxios(taskId, columnId),
     onSuccess: () => {
       refetch();
     },
@@ -122,6 +133,10 @@ const TaskModal: React.FC<{
     dispatch(setDeleteModal(deleteModalState));
     dispatch(setOpenModal());
   };
+
+  if (!taskId) {
+    return null;
+  }
 
   return (
     <React.Fragment>

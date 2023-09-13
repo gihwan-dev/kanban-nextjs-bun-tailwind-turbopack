@@ -8,8 +8,8 @@ import axios from "axios";
 import { SERVER_URL } from "@/const";
 import { useQuery } from "@tanstack/react-query";
 
-type GetTaskDto = {
-  task_id: number;
+export type GetColumnsTaskDto = {
+  task_id?: number;
   title: string;
   total: number;
   done: number;
@@ -19,7 +19,7 @@ const getTasksAxios = (columnId: number | undefined) => {
   if (!columnId) {
     throw new Error("columnId is undefined");
   }
-  return axios.get<GetTaskDto[]>(`${SERVER_URL}/column/${columnId}`);
+  return axios.get<GetColumnsTaskDto[]>(`${SERVER_URL}/column/${columnId}`);
 };
 
 const BodyColumn: React.FC<{
@@ -46,7 +46,7 @@ const BodyColumn: React.FC<{
         </span>
       </header>
       <section className="flex flex-col h-full w-full overflow-y-auto gap-5">
-        {data?.data.map((item) => {
+        {data?.data.map(item => {
           return (
             <BodyColumnItem
               key={`${item.task_id} body task`}

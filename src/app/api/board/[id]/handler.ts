@@ -36,8 +36,6 @@ export const deleteBoards = async (boardId: number) => {
     },
   });
 
-  console.log(deleteResult);
-
   return NextResponse.json(
     {},
     {
