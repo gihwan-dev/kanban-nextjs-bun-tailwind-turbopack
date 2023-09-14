@@ -1,6 +1,9 @@
 import React from "react";
-import MainHeaderNavRoot from "@/components/main/nav/MainHeaderNavRoot";
 import type { Metadata } from "next";
+
+import { MainHeaderNavRoot } from "@/features/main";
+import { getServerSession } from "next-auth";
+import { getNavBoardService } from "@/services/prisma-board-service";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -9,10 +12,14 @@ export const metadata: Metadata = {
 
 const MainPage: React.FC<{
   children: React.ReactNode;
-}> = ({ children }) => {
+}> = async ({ children }) => {
+  const session = await getServerSession();
+
+  const boards = await getNavBoardService(session);
+
   return (
-    <div className={"flex flex-col overflow-hidden w-full"}>
-      <MainHeaderNavRoot />
+    <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
+      <MainHeaderNavRoot boards={boards} />
       {children}
     </div>
   );

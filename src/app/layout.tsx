@@ -1,9 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import MySessionProvider from "@/utils/providers/session-provider";
+import MySessionProvider from "@/services/session-provider";
 import { getServerSession } from "next-auth";
-import MyQueryProvider from "@/utils/providers/react-query-provider";
+import MyQueryProvider from "@/services/react-query-provider";
+import RecoilProvider from "@/services/recoil-provider";
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -17,10 +18,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <body className={`${inter.className} overflow-hidden w-screen h-screen`}>
-        <MyQueryProvider>
-          <MySessionProvider session={session}>{children}</MySessionProvider>
-        </MyQueryProvider>
+      <body className={`${inter.className}`}>
+        <RecoilProvider>
+          <MyQueryProvider>
+            <MySessionProvider session={session}>{children}</MySessionProvider>
+          </MyQueryProvider>
+        </RecoilProvider>
       </body>
     </html>
   );

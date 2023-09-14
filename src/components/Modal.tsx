@@ -10,7 +10,7 @@ const Modal: React.FC<{
     <React.Fragment>
       <div
         onClick={onBackdropClick}
-        className="absolute top-0 left-0 w-screen h-screen -bg--Medium-Grey opacity-30"
+        className="absolute top-0 left-0 w-full h-full -bg--Medium-Grey opacity-30"
       />
       {children}
     </React.Fragment>

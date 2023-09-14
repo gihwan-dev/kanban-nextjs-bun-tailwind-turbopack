@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { SignupDto } from "./route";
 import prisma from "@/lib/prisma";
 import { StatusCodes } from "http-status-codes";
-import { hashPassword } from "@/utils/auth/hash";
+import { hashPassword } from "@/utils/hash";
 
 export const createOne = async (signUpDto: SignupDto) => {
   const existingUser = await prisma.user.findUnique({
@@ -17,7 +17,7 @@ export const createOne = async (signUpDto: SignupDto) => {
       },
       {
         status: StatusCodes.BAD_REQUEST,
-      }
+      },
     );
   }
 
@@ -36,7 +36,7 @@ export const createOne = async (signUpDto: SignupDto) => {
       },
       {
         status: StatusCodes.FORBIDDEN,
-      }
+      },
     );
   }
   return NextResponse.json(
@@ -45,6 +45,6 @@ export const createOne = async (signUpDto: SignupDto) => {
     },
     {
       status: StatusCodes.CREATED,
-    }
+    },
   );
 };
