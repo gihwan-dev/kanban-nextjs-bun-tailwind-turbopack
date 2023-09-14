@@ -15,13 +15,14 @@ const MainHeaderNavRoot: React.FC<{
   const [_, setNav] = useRecoilState(navState);
 
   useEffect(() => {
-    const initialNavState: NavState = {
-      open: false,
-      selectedBoard: boards[0],
-      boards,
-    };
-
-    setNav(initialNavState);
+    if (boards.length !== 0) {
+      const initialNavState: NavState = {
+        open: false,
+        selectedBoard: boards[0],
+        boards,
+      };
+      setNav(initialNavState);
+    }
   }, []);
 
   return (

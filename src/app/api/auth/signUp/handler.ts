@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { SignupDto } from "./route";
 import prisma from "@/lib/prisma";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword } from "@/utils/hash";
+import { SignupDto } from "@/features/auth";
 
 export const createOne = async (signUpDto: SignupDto) => {
   const existingUser = await prisma.user.findUnique({

@@ -1,11 +1,7 @@
 import { NextResponse } from "next/server";
 import { createOne } from "./handler";
 import { StatusCodes } from "http-status-codes";
-
-export type SignupDto = {
-  email: string;
-  password: string;
-};
+import { SignupDto } from "@/features/auth";
 
 export const POST = async (req: Request) => {
   try {
