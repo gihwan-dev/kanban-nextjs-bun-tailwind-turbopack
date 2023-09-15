@@ -1,16 +1,6 @@
-import { Session } from "next-auth";
 import prisma from "@/lib/prisma";
 
-export const validateUser = (
-  session: Session | null,
-): session is Session & { user: { email: string } } => {
-  if (!session) {
-    return false;
-  }
-  return !!session.user?.email;
-};
-
-export const getNavBoardService = async (session: Session | null) => {
+export const getNavBoardService = async () => {
   if (!validateUser(session)) {
     return [];
   }

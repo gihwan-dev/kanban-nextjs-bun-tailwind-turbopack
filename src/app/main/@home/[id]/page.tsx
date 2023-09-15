@@ -1,6 +1,6 @@
 import { SelectBoardModal } from "@/features/main";
 
-const MainPage = () => {
+const IdMainPage = async () => {
   return (
     <main className="-bg--light-grey-light-bg h-full w-full overflow-auto relative">
       <SelectBoardModal />
@@ -8,4 +8,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default IdMainPage;

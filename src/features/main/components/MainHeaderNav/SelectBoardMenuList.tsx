@@ -24,7 +24,7 @@ const SelectBoardMenuList: React.FC = () => {
       </span>
       <div
         className={`${
-          nav.open ? "" : "rotate-180"
+          nav.open ? "rotate-180" : ""
         } flex justify-center items-center`}
       >
         <IconDownArrow />

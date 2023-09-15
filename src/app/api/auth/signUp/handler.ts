@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { StatusCodes } from "http-status-codes";
 import { hashPassword } from "@/utils/hash";
-import { SignupDto } from "@/features/auth";
+import { SignUpDto } from "@/features/auth";
 
-export const createOne = async (signUpDto: SignupDto) => {
+export const createOne = async (signUpDto: SignUpDto) => {
   const existingUser = await prisma.user.findUnique({
     where: {
       email: signUpDto.email,

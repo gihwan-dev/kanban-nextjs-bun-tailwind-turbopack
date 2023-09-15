@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { MainHeaderNavRoot } from "@/features/main";
 import { getServerSession } from "next-auth";
 import { getNavBoardService } from "@/services/prisma-board-service";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -11,16 +12,24 @@ export const metadata: Metadata = {
 };
 
 const MainPage: React.FC<{
-  children: React.ReactNode;
-}> = async ({ children }) => {
+  home: React.ReactNode;
+  unAuth: React.ReactNode;
+}> = async ({ home, unAuth }) => {
   const session = await getServerSession();
 
   const boards = await getNavBoardService(session);
 
+  if (boards.length >= 1) {
+    redirect(`${boards[0].board_id}`);
+  }
+
+  console.log(session);
+
   return (
     <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
       <MainHeaderNavRoot boards={boards} />
-      {children}
+      {home}
+      {unAuth}
     </div>
   );
 };
