@@ -1,8 +1,8 @@
 import React from "react";
 
-import IconDownArrow from "../../../../assets/IconDownArrow";
+import IconDownArrow from "../../../assets/IconDownArrow";
 import { useRecoilState } from "recoil";
-import { navState } from "../../stores";
+import { navState } from "../stores";
 
 const SelectBoardMenuList: React.FC = () => {
   const [nav, setNav] = useRecoilState(navState);

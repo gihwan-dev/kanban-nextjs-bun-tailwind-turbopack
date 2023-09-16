@@ -1,5 +1,5 @@
 import SelectBoardMenuList from "./SelectBoardMenuList";
-import MobileLogo from "../../../../assets/MobileLogo";
+import MobileLogo from "../../../assets/MobileLogo";
 
 const SelectBoardNavMenu = () => {
   return (

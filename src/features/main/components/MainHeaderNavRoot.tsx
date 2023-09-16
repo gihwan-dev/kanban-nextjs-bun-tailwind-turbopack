@@ -4,10 +4,10 @@ import React, { useEffect } from "react";
 
 import SelectBoardNavMenu from "./SelectBoardNavMenu";
 
-import { NavBoard, NavState } from "../../types";
+import { NavBoard, NavState } from "../types";
 
 import { useRecoilState } from "recoil";
-import { navState } from "../../stores";
+import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useRouter } from "next/navigation";
 
@@ -26,7 +26,7 @@ const MainHeaderNavRoot: React.FC<{
         boards,
       };
       setNav(initialNavState);
-      router.push(`main/${boards[0].board_id}`);
+      router.push(`/main/${boards[0].board_id}`);
     }
   }, []);
 

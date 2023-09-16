@@ -4,8 +4,11 @@ import Link from "next/link";
 import Modal from "@/components/Modal";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { navState } from "../../stores";
+import { navState } from "../stores";
 import IconBoard from "@/assets/icon-board";
+import { NavBoard } from "../types";
+import IconBoardCreate from "@/assets/icon-board-create";
+import ThemeSelectIcon from "@/assets/ThemeSelectIcon";
 
 const SelectBoardModal: React.FC<{}> = () => {
   const [nav, setNav] = useRecoilState(navState);
@@ -17,16 +20,25 @@ const SelectBoardModal: React.FC<{}> = () => {
     }));
   };
 
+  const onClickHandler = (selectedBoard: NavBoard) => {
+    setNav(prev => ({
+      ...prev,
+      selectedBoard,
+    }));
+  };
+
   return (
     <>
       {nav.open ? (
         <Modal onBackdropClick={onCloseHandler}>
           <ul
             className={
-              "absolute top-6 left-1/2 -translate-x-1/2 max-w-xs -bg--White px-6 py-4 flex flex-col rounded-lg w-64"
+              "absolute top-6 left-1/2 -translate-x-1/2 -bg--White px-6 py-4 flex flex-col rounded-lg box-border"
             }
           >
-            <header className="pb-4">ALL BOARDS ({nav.boards.length})</header>
+            <header className="pb-4 -text--Medium-Grey text-sm font-bold">
+              ALL BOARDS ({nav.boards.length})
+            </header>
             {nav.boards.map(item => {
               return (
                 <li
@@ -45,7 +57,12 @@ const SelectBoardModal: React.FC<{}> = () => {
                     }
                   />
                   <Link
-                    className="whitespace-nowrap"
+                    className={`whitespace-nowrap font-bold text-xs ${
+                      item.board_id === nav.selectedBoard.board_id
+                        ? "-text--White"
+                        : "-text--Black"
+                    }`}
+                    onClick={onClickHandler.bind(null, item)}
                     href={`/main/${item.board_id}`}
                   >
                     {item.title}
@@ -53,7 +70,17 @@ const SelectBoardModal: React.FC<{}> = () => {
                 </li>
               );
             })}
-            <button>Create New Board</button>
+            <button
+              className={
+                "flex -text--Main-Purple hover:-text--main-purple-hover text-xs font-bold gap-2 items-center py-4"
+              }
+            >
+              <IconBoardCreate />
+              <span>+Create New Board</span>
+            </button>
+            <footer>
+              <ThemeSelectIcon onClick={() => {}} />
+            </footer>
           </ul>
         </Modal>
       ) : (
