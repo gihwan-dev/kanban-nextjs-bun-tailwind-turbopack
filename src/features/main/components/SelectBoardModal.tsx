@@ -36,7 +36,7 @@ const SelectBoardModal: React.FC<{}> = () => {
               "absolute top-6 left-1/2 -translate-x-1/2 -bg--White px-6 py-4 flex flex-col rounded-lg box-border"
             }
           >
-            <header className="pb-4 -text--Medium-Grey text-sm font-bold">
+            <header className="pb-4 -text--Medium-Grey text-xs font-bold">
               ALL BOARDS ({nav.boards.length})
             </header>
             {nav.boards.map(item => {
@@ -57,7 +57,7 @@ const SelectBoardModal: React.FC<{}> = () => {
                     }
                   />
                   <Link
-                    className={`whitespace-nowrap font-bold text-xs ${
+                    className={`whitespace-nowrap font-bold text-sm ${
                       item.board_id === nav.selectedBoard.board_id
                         ? "-text--White"
                         : "-text--Black"
@@ -72,7 +72,7 @@ const SelectBoardModal: React.FC<{}> = () => {
             })}
             <button
               className={
-                "flex -text--Main-Purple hover:-text--main-purple-hover text-xs font-bold gap-2 items-center py-4"
+                "flex -text--Main-Purple hover:-text--main-purple-hover text-sm font-bold gap-2 items-center py-4"
               }
             >
               <IconBoardCreate />

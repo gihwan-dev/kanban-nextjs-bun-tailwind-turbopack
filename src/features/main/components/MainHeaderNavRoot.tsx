@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import SelectBoardNavMenu from "./SelectBoardNavMenu";
 
@@ -10,11 +10,13 @@ import { useRecoilState } from "recoil";
 import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useRouter } from "next/navigation";
+import EllipsisMenu from "@/features/main/components/EllipsisMenu";
 
 const MainHeaderNavRoot: React.FC<{
   boards: NavBoard[];
 }> = ({ boards }) => {
   const [_, setNav] = useRecoilState(navState);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const router = useRouter();
 
@@ -30,11 +32,21 @@ const MainHeaderNavRoot: React.FC<{
     }
   }, []);
 
+  const iconClickHandler = () => {
+    setOpenMenu(prev => !prev);
+  };
+
   return (
-    <header className={"flex flex-row justify-between px-4 py-4 w-full"}>
-      <SelectBoardNavMenu />
-      <IconVerticalEllipsis className="cursor-pointer" onClick={() => {}} />
-    </header>
+    <>
+      <header className={"flex flex-row justify-between px-4 py-4 w-full"}>
+        <SelectBoardNavMenu />
+        <IconVerticalEllipsis
+          className="cursor-pointer"
+          onClick={iconClickHandler}
+        />
+        {openMenu ? <EllipsisMenu /> : null}
+      </header>
+    </>
   );
 };
 
