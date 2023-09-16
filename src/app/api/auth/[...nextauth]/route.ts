@@ -1,8 +1,9 @@
-import nextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { authenticate } from "./handler";
 
-const option: NextAuthOptions = {
+export const option: NextAuthOptions = {
+  useSecureCookies: process.env.NEXTAUTH_URL?.startsWith("https"),
   providers: [
     Credentials({
       name: "Credentials",
@@ -28,9 +29,8 @@ const option: NextAuthOptions = {
       },
     }),
   ],
-  session: { strategy: "jwt" },
 };
 
-const handler = nextAuth(option);
+const handler = NextAuth(option);
 
 export { handler as GET, handler as POST };

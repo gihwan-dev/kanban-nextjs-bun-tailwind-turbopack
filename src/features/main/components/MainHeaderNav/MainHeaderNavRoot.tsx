@@ -9,11 +9,14 @@ import { NavBoard, NavState } from "../../types";
 import { useRecoilState } from "recoil";
 import { navState } from "../../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
+import { useRouter } from "next/navigation";
 
 const MainHeaderNavRoot: React.FC<{
   boards: NavBoard[];
 }> = ({ boards }) => {
   const [_, setNav] = useRecoilState(navState);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (boards.length >= 1) {
@@ -23,6 +26,7 @@ const MainHeaderNavRoot: React.FC<{
         boards,
       };
       setNav(initialNavState);
+      router.push(`main/${boards[0].board_id}`);
     }
   }, []);
 

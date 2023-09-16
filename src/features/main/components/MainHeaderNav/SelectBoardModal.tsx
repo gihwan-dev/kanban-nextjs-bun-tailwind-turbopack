@@ -46,7 +46,7 @@ const SelectBoardModal: React.FC<{}> = () => {
                   />
                   <Link
                     className="whitespace-nowrap"
-                    href={`main/${item.board_id}`}
+                    href={`/main/${item.board_id}`}
                   >
                     {item.title}
                   </Link>

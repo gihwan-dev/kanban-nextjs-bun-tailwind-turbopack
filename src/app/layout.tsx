@@ -5,6 +5,7 @@ import MySessionProvider from "@/services/session-provider";
 import { getServerSession } from "next-auth";
 import MyQueryProvider from "@/services/react-query-provider";
 import RecoilProvider from "@/services/recoil-provider";
+import { option } from "@/app/api/auth/[...nextauth]/route";
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const session = await getServerSession();
+  const session = await getServerSession(option);
 
   return (
     <html lang="en">

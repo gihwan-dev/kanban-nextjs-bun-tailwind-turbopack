@@ -9,7 +9,6 @@ export const authenticate = async (
   email: string,
   password: string,
 ): Promise<AuthHandlerResponse | null> => {
-  // TODO 인증 로직 설치(아이디 패스워드 받아와서 검증)
   const user = await prisma.user.findUnique({
     where: {
       email,
