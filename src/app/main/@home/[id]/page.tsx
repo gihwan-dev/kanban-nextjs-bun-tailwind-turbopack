@@ -1,4 +1,9 @@
-import { ColumnRoot, EmptyColumn, SelectBoardModal } from "@/features/main";
+import {
+  AddColumnButton,
+  ColumnRoot,
+  EmptyColumn,
+  SelectBoardModal,
+} from "@/features/main";
 import { getServerSession } from "next-auth";
 import { option } from "@/app/api/auth/[...nextauth]/route";
 import { Params } from "@/types/params";
@@ -12,7 +17,10 @@ const IdMainPage = async ({ params }: Params) => {
       {!columns || columns.length === 0 ? (
         <EmptyColumn />
       ) : (
-        <ColumnRoot columns={columns} />
+        <>
+          <ColumnRoot columns={columns} />
+          <AddColumnButton />
+        </>
       )}
       <SelectBoardModal />
     </main>

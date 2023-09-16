@@ -19,7 +19,7 @@ const TaskItem: React.FC<{
   return (
     <li
       className={
-        "flex flex-col px-4 py-6 rounded-lg w-full -bg--White shadow-task-card gap-2"
+        "flex flex-col px-4 py-6 rounded-lg w-full -bg--White shadow-task-card gap-2 relative"
       }
     >
       <header className={"text-base font-bold -text--Black"}>

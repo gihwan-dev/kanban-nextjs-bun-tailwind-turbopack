@@ -13,13 +13,15 @@ const ColumnContainer: React.FC<{
   const color = randomColor();
   const tasks = await getColumnsTask(column.column_id);
   return (
-    <ul className={"flex flex-col h-full"}>
+    <ul className={"flex flex-col h-full gap-4"}>
       <ColumnContainerHeader
         color={color}
         title={column.title}
         count={tasksCount}
       />
-      <div className={"flex flex-col w-72 gap-5 overflow-y-auto py-6"}>
+      <div
+        className={"flex flex-col w-72 gap-5 overflow-y-auto p-2 box-border"}
+      >
         {tasks.map(item => {
           return (
             <TaskItem
