@@ -1,6 +1,8 @@
 import prisma from "@/lib/prisma";
+import { validateUser } from "@/utils/auth";
+import { Session } from "next-auth";
 
-export const getNavBoardService = async () => {
+export const getNavBoardService = async (session: Session | null) => {
   if (!validateUser(session)) {
     return [];
   }
