@@ -45,6 +45,8 @@ const TaskItem: React.FC<{
       </li>
       {openModal && (
         <TaskInfoModal
+          columnId={task.column_id}
+          taskId={task.task_id}
           title={task.title}
           description={task.description}
           subTasks={subTasks}

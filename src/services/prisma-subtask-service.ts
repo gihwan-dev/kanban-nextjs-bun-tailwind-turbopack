@@ -5,3 +5,14 @@ export const getTasksSubTask = async (taskId: number) => {
     },
   });
 };
+
+export const setSubTasksState = async (subTaskId: number, state: boolean) => {
+  return prisma.subTask.update({
+    where: {
+      subtask_id: subTaskId,
+    },
+    data: {
+      state,
+    },
+  });
+};

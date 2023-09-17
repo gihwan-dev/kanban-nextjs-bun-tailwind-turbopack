@@ -8,3 +8,12 @@ export const getSubtasksFetch = async (taskId: number) => {
   }
   return (await response.json()) as SubTask[];
 };
+
+export const setSubtasksFetch = async (subTaskId: number, state: boolean) => {
+  return fetch(`${SERVER_URL}/subtasks/${subTaskId}`, {
+    method: "POST",
+    body: JSON.stringify({
+      state,
+    }),
+  });
+};

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Params } from "@/types/params";
-import { getSubtasks } from "@/app/api/subtasks/[id]/handler";
+import { getSubtasks, setSubtasksState } from "@/app/api/subtasks/[id]/handler";
 import { StatusCodes } from "http-status-codes";
 
 export const GET = async (req: NextRequest, { params }: Params) => {
@@ -15,5 +15,14 @@ export const GET = async (req: NextRequest, { params }: Params) => {
         status: StatusCodes.INTERNAL_SERVER_ERROR,
       },
     );
+  }
+};
+
+export const POST = async (req: NextRequest, { params }: Params) => {
+  try {
+    const data = (await req.json()) as { state: boolean };
+    return await setSubtasksState(Number(params.id), data.state);
+  } catch (e) {
+    return NextResponse.json({}, { status: StatusCodes.INTERNAL_SERVER_ERROR });
   }
 };
