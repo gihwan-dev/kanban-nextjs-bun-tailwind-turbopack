@@ -9,8 +9,12 @@ const Modal: React.FC<{
   return (
     <React.Fragment>
       <div
+        style={{
+          backgroundColor: "black",
+          opacity: 0.5,
+        }}
         onClick={onBackdropClick}
-        className="absolute top-0 left-0 w-full h-full -bg--Medium-Grey opacity-30"
+        className="absolute top-0 left-0 w-full h-full"
       />
       {children}
     </React.Fragment>

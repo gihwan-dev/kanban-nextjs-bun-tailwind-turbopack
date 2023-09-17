@@ -22,7 +22,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       <body className={`${inter.className}`}>
         <RecoilProvider>
           <MyQueryProvider>
-            <MySessionProvider session={session}>{children}</MySessionProvider>
+            <MySessionProvider session={session}>
+              {children}
+              <div id={"modal"}></div>
+            </MySessionProvider>
           </MyQueryProvider>
         </RecoilProvider>
       </body>

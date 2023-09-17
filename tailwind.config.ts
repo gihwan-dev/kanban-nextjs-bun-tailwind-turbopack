@@ -24,6 +24,7 @@ const config: Config = {
       "--White": "#FFFFFF",
       "--Red": "#EA5555",
       "--red-hover": "#FF9898",
+      "--Modal-Backdrop": "rgba(0, 0, 0, 0.5)",
     },
     boxShadow: {
       "task-card": "0px 4px 6px 0px rgba(54, 78, 126, 0.10)",
