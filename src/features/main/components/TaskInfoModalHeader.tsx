@@ -1,13 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
+import TaskInfoModalHeaderMenu from "./TaskInfoModalHeaderMenu";
 
 const TaskInfoModalHeader: React.FC<{
   title: string;
-}> = ({ title }) => {
+  taskId: number;
+  onClose: () => void;
+}> = ({ title, taskId, onClose }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const onClickHandler = () => {
+    setIsMenuOpen(prev => !prev);
+  };
+
   return (
-    <header className={"flex flex-row justify-between items-center"}>
+    <header className={"flex flex-row justify-between items-center relative"}>
       <span className={"text-lg -text--Black font-bold"}>{title}</span>
-      <IconVerticalEllipsis onClick={() => {}} />
+      <IconVerticalEllipsis onClick={onClickHandler} />
+      {isMenuOpen && (
+        <TaskInfoModalHeaderMenu onClose={onClose} taskId={taskId} />
+      )}
     </header>
   );
 };

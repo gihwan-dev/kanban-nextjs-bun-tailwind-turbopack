@@ -32,7 +32,11 @@ const TaskInfoModal: React.FC<{
               "absolute w-72 -bg--White top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 pt-6 pb-8 flex flex-col gap-6 rounded-md"
             }
           >
-            <TaskInfoModalHeader title={title} />
+            <TaskInfoModalHeader
+              onClose={onClose}
+              taskId={taskId}
+              title={title}
+            />
             <p className={"-text--Medium-Grey font-medium text-sm"}>
               {description}
             </p>
