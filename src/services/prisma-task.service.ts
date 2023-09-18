@@ -22,3 +22,11 @@ export const setTasksColumn = async (
     },
   });
 };
+
+export const deleteTask = async (taskId: number) => {
+  return prisma.task.delete({
+    where: {
+      task_id: taskId,
+    },
+  });
+};

@@ -20,7 +20,7 @@ const TaskInfoModal: React.FC<{
     setMounted(true);
   }, []);
 
-  const onCloseHandler = async () => {
+  const onCloseHandler = () => {
     onClose();
   };
 

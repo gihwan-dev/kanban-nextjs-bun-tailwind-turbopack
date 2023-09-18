@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
-import { getColumnsTask, setTasksColumn } from "@/services/prisma-task.service";
+import {
+  deleteTask,
+  getColumnsTask,
+  setTasksColumn,
+} from "@/services/prisma-task.service";
 
 export const setTasksColumnHandler = async (
   taskId: number,
@@ -23,4 +27,10 @@ export const getColumnsTaskHandler = async (columnId: number) => {
   const tasks = await getColumnsTask(columnId);
 
   return NextResponse.json(tasks, { status: StatusCodes.OK });
+};
+
+export const deleteTaskHandler = async (taskId: number) => {
+  const deleteResult = await deleteTask(taskId);
+
+  return NextResponse.json({}, { status: StatusCodes.OK });
 };

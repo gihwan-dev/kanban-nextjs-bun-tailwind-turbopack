@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import DeleteModal from "@/components/DeleteModal";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { deleteModalState } from "@/stores";
 
@@ -8,18 +7,16 @@ const TaskInfoModalHeaderMenu: React.FC<{
   onClose: () => void;
   title: string;
 }> = ({ taskId, onClose, title }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [_, setDeleteStateData] = useRecoilState(deleteModalState);
 
   const onClickHandler = () => {
-    // setDeleteStateData({
-    //   title,
-    //   type,
-    // })
+    setDeleteStateData({
+      title,
+      type: "tasks",
+      isOpen: true,
+      targetId: taskId,
+    });
     onClose();
-
-    setIsMenuOpen(true);
   };
   return (
     <ul
@@ -28,12 +25,11 @@ const TaskInfoModalHeaderMenu: React.FC<{
       }
     >
       <button
-        onClick={() => {}}
+        onClick={onClickHandler}
         className={"-text--Red hover:-text--red-hover"}
       >
         Delete
       </button>
-      <DeleteModal />
     </ul>
   );
 };

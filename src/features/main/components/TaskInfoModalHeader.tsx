@@ -18,7 +18,11 @@ const TaskInfoModalHeader: React.FC<{
       <span className={"text-lg -text--Black font-bold"}>{title}</span>
       <IconVerticalEllipsis onClick={onClickHandler} />
       {isMenuOpen && (
-        <TaskInfoModalHeaderMenu onClose={onClose} taskId={taskId} />
+        <TaskInfoModalHeaderMenu
+          onClose={onClose}
+          title={title}
+          taskId={taskId}
+        />
       )}
     </header>
   );
