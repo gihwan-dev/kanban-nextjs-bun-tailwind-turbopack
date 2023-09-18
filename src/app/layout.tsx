@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 import MyQueryProvider from "@/services/react-query-provider";
 import RecoilProvider from "@/services/recoil-provider";
 import { option } from "@/app/api/auth/[...nextauth]/route";
-import ChakrauiProvider from "@/services/chakraui-provider";
+import MyNextUIProvider from "@/services/nextui-provider";
 
 const inter = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -24,10 +24,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <RecoilProvider>
           <MyQueryProvider>
             <MySessionProvider session={session}>
-              <ChakrauiProvider>
+              <MyNextUIProvider>
                 {children}
                 <div id={"modal"}></div>
-              </ChakrauiProvider>
+              </MyNextUIProvider>
             </MySessionProvider>
           </MyQueryProvider>
         </RecoilProvider>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Task } from "@prisma/client";
 import { useGetSubtasks } from "../hooks";
 import TaskInfoModal from "./TaskInfoModal";
+import { useRouter } from "next/navigation";
 
 const TaskItem: React.FC<{
   task: Task;
@@ -11,8 +12,9 @@ const TaskItem: React.FC<{
   const [openModal, setOpenModal] = useState(false);
 
   const { data: subTasks } = useGetSubtasks(task.task_id);
-  const total = subTasks?.length;
+  const router = useRouter();
 
+  const total = subTasks?.length;
   const done = subTasks?.reduce((acc, item) => {
     if (item.state) {
       return acc + 1;
@@ -26,6 +28,7 @@ const TaskItem: React.FC<{
 
   const onCloseModal = () => {
     setOpenModal(false);
+    router.refresh();
   };
 
   return (

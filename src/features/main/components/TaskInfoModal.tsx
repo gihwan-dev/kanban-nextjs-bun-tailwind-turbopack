@@ -4,8 +4,7 @@ import React, { useEffect, useState } from "react";
 import { SubTask } from "@prisma/client";
 import TaskInfoModalHeader from "./TaskInfoModalHeader";
 import TaskInfoModalSubtasks from "./TaskInfoModalSubtasks";
-import { useGetSubtasks } from "../hooks";
-import TaskInfoModalFooter from "@/features/main/components/TaskInfoModalFooter";
+import TaskInfoModalFooter from "./TaskInfoModalFooter";
 
 const TaskInfoModal: React.FC<{
   onClose: () => void;
@@ -16,7 +15,6 @@ const TaskInfoModal: React.FC<{
   columnId: number;
 }> = ({ onClose, subTasks, title, description, taskId, columnId }) => {
   const [mounted, setMounted] = useState(false);
-  const { refetch } = useGetSubtasks(taskId);
 
   useEffect(() => {
     setMounted(true);
@@ -24,7 +22,6 @@ const TaskInfoModal: React.FC<{
 
   const onCloseHandler = async () => {
     onClose();
-    refetch();
   };
 
   return mounted
@@ -40,7 +37,7 @@ const TaskInfoModal: React.FC<{
               {description}
             </p>
             <TaskInfoModalSubtasks taskId={taskId} subTasks={subTasks} />
-            <TaskInfoModalFooter />
+            <TaskInfoModalFooter taskId={taskId} columnId={columnId} />
           </div>
         </Modal>,
         document.getElementById("modal") as HTMLElement,

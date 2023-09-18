@@ -8,3 +8,17 @@ export const getColumnsTask = async (columnId: number): Promise<Task[]> => {
     },
   });
 };
+
+export const setTasksColumn = async (
+  taskId: number,
+  targetColumnId: number,
+) => {
+  return prisma.task.update({
+    where: {
+      task_id: taskId,
+    },
+    data: {
+      column_id: targetColumnId,
+    },
+  });
+};

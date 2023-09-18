@@ -1,14 +1,22 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import { RootColumn } from "@/types/prisma-type";
 import ColumnContainer from "./ColumnContainer";
-import SetColumnComponents from "./SetColumnComponents";
+import { useRecoilState } from "recoil";
+import { columnsState } from "../stores";
 
 const ColumnRoot: React.FC<{
   columns: RootColumn[];
 }> = ({ columns }) => {
+  const [_, setColumns] = useRecoilState(columnsState);
+
+  useEffect(() => {
+    setColumns(columns);
+  }, [setColumns, columns]);
+
   return (
     <>
-      <SetColumnComponents columns={columns} />
       {columns.map(item => {
         return (
           <ColumnContainer

@@ -1,5 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getSubtasksFetch, setSubtasksFetch } from "../api";
+import {
+  getColumnsFetch,
+  getColumnsTaskCountFetch,
+  getColumnsTasksFetch,
+  getSubtasksFetch,
+  setSubtasksFetch,
+  setTasksColumnFetch,
+} from "../api";
 
 export const useGetSubtasks = (taskId: number) => {
   return useQuery({
@@ -15,5 +22,39 @@ export const useSetSubtasks = () => {
     mutationKey: ["subtasks"],
     mutationFn: ({ subTaskId, state }: { subTaskId: number; state: boolean }) =>
       setSubtasksFetch(subTaskId, state),
+  });
+};
+
+export const useSetTasksColumn = () => {
+  return useMutation({
+    mutationKey: ["subtasks"],
+    mutationFn: ({
+      taskId,
+      targetColumnId,
+    }: {
+      taskId: number;
+      targetColumnId: number;
+    }) => setTasksColumnFetch(taskId, targetColumnId),
+  });
+};
+
+export const useGetColumns = (boardId: number) => {
+  return useQuery({
+    queryKey: ["columns", boardId],
+    queryFn: () => getColumnsFetch(boardId),
+  });
+};
+
+export const useGetColumnsTaskCount = (columnId: number) => {
+  return useQuery({
+    queryKey: ["columns", "tasks", "count", columnId],
+    queryFn: () => getColumnsTaskCountFetch(columnId),
+  });
+};
+
+export const useGetColumnsTask = (columnId: number) => {
+  return useQuery({
+    queryKey: ["columns", "tasks", columnId],
+    queryFn: () => getColumnsTasksFetch(columnId),
   });
 };

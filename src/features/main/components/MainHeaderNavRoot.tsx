@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useRouter } from "next/navigation";
-import EllipsisMenu from "@/features/main/components/EllipsisMenu";
+import EllipsisMenu from "./EllipsisMenu";
 
 const MainHeaderNavRoot: React.FC<{
   boards: NavBoard[];
