@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
+  addColumnsFetch,
   getColumnsFetch,
   getColumnsTaskCountFetch,
   getColumnsTasksFetch,
@@ -56,5 +57,13 @@ export const useGetColumnsTask = (columnId: number) => {
   return useQuery({
     queryKey: ["columns", "tasks", columnId],
     queryFn: () => getColumnsTasksFetch(columnId),
+  });
+};
+
+export const useAddColumns = () => {
+  return useMutation({
+    mutationKey: ["columns"],
+    mutationFn: ({ boardId, data }: { boardId: number; data: string[] }) =>
+      addColumnsFetch(boardId, data),
   });
 };

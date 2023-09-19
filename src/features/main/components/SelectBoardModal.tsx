@@ -33,7 +33,7 @@ const SelectBoardModal: React.FC<{}> = () => {
         <Modal onBackdropClick={onCloseHandler}>
           <ul
             className={
-              "absolute top-6 left-1/2 -translate-x-1/2 -bg--White px-6 py-4 flex flex-col rounded-lg box-border"
+              "fixed top-16 left-1/2 -translate-x-1/2 -bg--White px-6 py-4 flex flex-col rounded-lg box-border"
             }
           >
             <header className="pb-4 -text--Medium-Grey text-xs font-bold">

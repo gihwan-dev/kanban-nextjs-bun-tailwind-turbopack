@@ -14,7 +14,7 @@ const Modal: React.FC<{
           opacity: 0.5,
         }}
         onClick={onBackdropClick}
-        className="absolute top-0 left-0 w-full h-full"
+        className="fixed top-0 left-0 w-full h-full"
       />
       {children}
     </React.Fragment>

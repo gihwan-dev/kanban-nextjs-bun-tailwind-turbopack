@@ -18,3 +18,14 @@ export const getNavBoardService = async (session: Session | null) => {
     },
   });
 };
+
+export const addNewColumns = async (boardId: number, data: string[]) => {
+  return prisma.column.createMany({
+    data: data.map(item => {
+      return {
+        title: item,
+        board_id: boardId,
+      };
+    }),
+  });
+};

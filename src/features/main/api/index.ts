@@ -54,3 +54,10 @@ export const getColumnsTasksFetch = async (columnId: number) => {
   }
   return (await response.json()) as Task[];
 };
+
+export const addColumnsFetch = async (boardId: number, data: string[]) => {
+  return fetch(`${SERVER_URL}/boards/${boardId}`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+};

@@ -18,7 +18,7 @@ const IdMainPage = () => {
   const { data: columns } = useGetColumns(Number(params.id));
   return (
     <>
-      <main className="-bg--light-grey-light-bg h-full w-full overflow-x-auto overflow-y-hidden relative px-4 py-6 flex flex-row gap-6">
+      <main className="-bg--light-grey-light-bg h-full w-full overflow-x-auto overflow-y-hidden px-4 py-6 flex flex-row gap-6">
         {!columns || columns.length === 0 ? (
           <EmptyColumn />
         ) : (
