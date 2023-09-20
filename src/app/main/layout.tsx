@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 
 import { MainHeaderNavRoot } from "@/features/main";
 import { getServerSession } from "next-auth";
-import { getNavBoardService } from "@/services/prisma-board-service";
 import { option } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
@@ -17,11 +16,9 @@ const MainPage: React.FC<{
 }> = async ({ home, unAuth }) => {
   const session = await getServerSession(option);
 
-  const boards = await getNavBoardService(session);
-
   return (
     <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
-      <MainHeaderNavRoot boards={boards} />
+      <MainHeaderNavRoot />
       {session ? home : unAuth}
     </div>
   );

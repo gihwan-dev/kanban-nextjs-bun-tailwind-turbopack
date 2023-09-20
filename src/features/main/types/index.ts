@@ -7,3 +7,8 @@ export type NavState = {
   selectedBoard: NavBoard;
   open: boolean;
 };
+
+export type CreateBoardDto = {
+  boardName: string;
+  columns: string[];
+};

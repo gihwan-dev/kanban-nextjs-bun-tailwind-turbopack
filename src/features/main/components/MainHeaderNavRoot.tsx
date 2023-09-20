@@ -4,24 +4,29 @@ import React, { useEffect, useState } from "react";
 
 import SelectBoardNavMenu from "./SelectBoardNavMenu";
 
-import { NavBoard, NavState } from "../types";
+import { NavState } from "../types";
 
 import { useRecoilState } from "recoil";
 import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useRouter } from "next/navigation";
 import EllipsisMenu from "./EllipsisMenu";
+import { useGetBoards } from "../hooks";
 
-const MainHeaderNavRoot: React.FC<{
-  boards: NavBoard[];
-}> = ({ boards }) => {
-  const [_, setNav] = useRecoilState(navState);
+const MainHeaderNavRoot: React.FC<{}> = () => {
+  const [navStateData, setNav] = useRecoilState(navState);
   const [openMenu, setOpenMenu] = useState(false);
 
   const router = useRouter();
 
+  const { data: boards } = useGetBoards();
+
   useEffect(() => {
-    if (boards.length >= 1) {
+    if (
+      !!boards &&
+      boards.length >= 1 &&
+      navStateData.selectedBoard.title === ""
+    ) {
       const initialNavState: NavState = {
         open: false,
         selectedBoard: boards[0],
@@ -30,7 +35,7 @@ const MainHeaderNavRoot: React.FC<{
       setNav(initialNavState);
       router.push(`/main/${boards[0].board_id}`);
     }
-  }, []);
+  }, [boards]);
 
   const iconClickHandler = () => {
     setOpenMenu(prev => !prev);

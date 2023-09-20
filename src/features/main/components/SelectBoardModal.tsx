@@ -2,16 +2,18 @@
 
 import Link from "next/link";
 import Modal from "@/components/Modal";
-import React from "react";
+import React, { useState } from "react";
 import { useRecoilState } from "recoil";
 import { navState } from "../stores";
 import IconBoard from "@/assets/icon-board";
 import { NavBoard } from "../types";
 import IconBoardCreate from "@/assets/icon-board-create";
 import ThemeSelectIcon from "@/assets/ThemeSelectIcon";
+import CreateBoardModal from "./CreateBoardModal";
 
 const SelectBoardModal: React.FC<{}> = () => {
   const [nav, setNav] = useRecoilState(navState);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const onCloseHandler = () => {
     setNav(prev => ({
@@ -25,6 +27,20 @@ const SelectBoardModal: React.FC<{}> = () => {
       ...prev,
       selectedBoard,
     }));
+  };
+
+  const onCreateBoardHandler = () => {
+    setOpenMenu(true);
+    setNav(prev => {
+      return {
+        ...prev,
+        open: false,
+      };
+    });
+  };
+
+  const onModalCloseHandler = () => {
+    setOpenMenu(false);
   };
 
   return (
@@ -71,6 +87,7 @@ const SelectBoardModal: React.FC<{}> = () => {
               );
             })}
             <button
+              onClick={onCreateBoardHandler}
               className={
                 "flex -text--Main-Purple hover:-text--main-purple-hover text-sm font-bold gap-2 items-center py-4"
               }
@@ -86,6 +103,7 @@ const SelectBoardModal: React.FC<{}> = () => {
       ) : (
         <div className="absolute"></div>
       )}
+      {openMenu && <CreateBoardModal onClose={onModalCloseHandler} />}
     </>
   );
 };

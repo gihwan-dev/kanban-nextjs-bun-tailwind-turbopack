@@ -32,7 +32,7 @@ const AddNewColumnModal: React.FC<{
 
   const onAddInputHandler = () => {
     setInputList(prev => {
-      return [...prev, ""];
+      return [...prev, Math.random().toString().slice(2)];
     });
   };
 
@@ -74,11 +74,11 @@ const AddNewColumnModal: React.FC<{
               <header className={"-text--Medium-Grey font-bold text-xs"}>
                 columns
               </header>
-              {inputList.map((_, index) => {
+              {inputList.map((item, index) => {
                 return (
                   <div
                     className={"flex flex-row items-center gap-4"}
-                    key={`${index}AddNewColumnModalInput`}
+                    key={`${item}AddNewColumnModalInput`}
                   >
                     <input
                       className={
