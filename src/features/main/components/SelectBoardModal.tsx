@@ -29,6 +29,13 @@ const SelectBoardModal: React.FC<{}> = () => {
     }));
   };
 
+  const onLinkClickHandler = () => {
+    setNav(prev => ({
+      ...prev,
+      open: false,
+    }));
+  };
+
   const onCreateBoardHandler = () => {
     setOpenMenu(true);
     setNav(prev => {
@@ -73,6 +80,7 @@ const SelectBoardModal: React.FC<{}> = () => {
                     }
                   />
                   <Link
+                    onClickCapture={onLinkClickHandler}
                     className={`whitespace-nowrap font-bold text-sm ${
                       item.board_id === nav.selectedBoard.board_id
                         ? "-text--White"

@@ -9,7 +9,7 @@ import { NavState } from "../types";
 import { useRecoilState } from "recoil";
 import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import EllipsisMenu from "./EllipsisMenu";
 import { useGetBoards } from "../hooks";
 
@@ -21,8 +21,25 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
 
   const { data: boards } = useGetBoards();
 
+  const params = useParams();
+
   useEffect(() => {
-    if (
+    if (!!boards && params.id) {
+      const selectedBoard = boards?.find(
+        item => item.board_id == Number(params.id),
+      );
+      if (!selectedBoard) {
+        router.push("/main");
+        return;
+      }
+
+      const initialNavState: NavState = {
+        open: false,
+        selectedBoard: selectedBoard,
+        boards,
+      };
+      setNav(initialNavState);
+    } else if (
       !!boards &&
       boards.length >= 1 &&
       navStateData.selectedBoard.title === ""
@@ -45,11 +62,28 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
     <>
       <header className={"flex flex-row justify-between px-4 py-4 w-full"}>
         <SelectBoardNavMenu />
-        <IconVerticalEllipsis
-          className="cursor-pointer"
-          onClick={iconClickHandler}
-        />
-        {openMenu ? <EllipsisMenu /> : null}
+        <div className={"flex flex-row items-center gap-4"}>
+          <button
+            className={
+              "py-2 px-4 -text--White -bg--Main-Purple rounded-full font-bold w-12 hover:-bg--main-purple-hover"
+            }
+          >
+            +
+          </button>
+          <IconVerticalEllipsis
+            className="cursor-pointer"
+            onClick={iconClickHandler}
+          />
+        </div>
+        {openMenu ? (
+          <>
+            <div
+              onClick={() => setOpenMenu(false)}
+              className={"absolute w-full h-full top-0 left-0"}
+            />{" "}
+            <EllipsisMenu />
+          </>
+        ) : null}
       </header>
     </>
   );
