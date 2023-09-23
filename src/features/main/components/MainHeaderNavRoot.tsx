@@ -12,10 +12,12 @@ import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useParams, useRouter } from "next/navigation";
 import EllipsisMenu from "./EllipsisMenu";
 import { useGetBoards } from "../hooks";
+import AddNewTaskModal from "./AddNewTaskModal";
 
 const MainHeaderNavRoot: React.FC<{}> = () => {
   const [navStateData, setNav] = useRecoilState(navState);
   const [openMenu, setOpenMenu] = useState(false);
+  const [openTaskMenu, setOpenTaskMenu] = useState(false);
 
   const router = useRouter();
 
@@ -58,12 +60,17 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
     setOpenMenu(prev => !prev);
   };
 
+  const onClickAddNewTaskModal = () => {
+    setOpenTaskMenu(prev => !prev);
+  };
+
   return (
     <>
       <header className={"flex flex-row justify-between px-4 py-4 w-full"}>
         <SelectBoardNavMenu />
         <div className={"flex flex-row items-center gap-4"}>
           <button
+            onClick={onClickAddNewTaskModal}
             className={
               "py-2 px-4 -text--White -bg--Main-Purple rounded-full font-bold w-12 hover:-bg--main-purple-hover"
             }
@@ -83,6 +90,9 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
             />{" "}
             <EllipsisMenu />
           </>
+        ) : null}
+        {openTaskMenu ? (
+          <AddNewTaskModal onClose={onClickAddNewTaskModal} />
         ) : null}
       </header>
     </>
