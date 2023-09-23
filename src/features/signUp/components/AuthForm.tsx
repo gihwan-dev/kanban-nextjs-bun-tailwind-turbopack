@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { getCurrentFormState, getCurrentFormTitle } from "../stores";
 import { EnteredForm, LogInDto, SignUpDto } from "../types";
-import { useLogin, useSignUp } from "../hooks";
+import { useSignUp } from "../hooks";
 import { validateForm } from "../utils";
+import { formState } from "../stores";
 
 const AuthForm = () => {
   const [enteredForm, setEnteredForm] = useState<EnteredForm>({
@@ -15,19 +15,9 @@ const AuthForm = () => {
   });
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const login = useLogin();
   const { mutate: signUp, isLoading, isError } = useSignUp();
 
-  const formState = useRecoilValue(getCurrentFormState);
-  const title = useRecoilValue(getCurrentFormTitle);
-
-  useEffect(() => {
-    setEnteredForm({
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
-  }, [title]);
+  const formStateData = useRecoilValue(formState);
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsValidForm(true);
@@ -40,41 +30,23 @@ const AuthForm = () => {
   };
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    switch (title) {
-      case "login":
-        const loginFormData: LogInDto = {
-          email: enteredForm.email,
-          password: enteredForm.password,
-        };
-        if (!validateForm("login", enteredForm)) {
-          setIsValidForm(false);
-          return;
-        }
-        login(loginFormData);
-        break;
-      case "signUp":
-        const signUpFormData: SignUpDto = {
-          email: enteredForm.email,
-          password: enteredForm.password,
-          confirmPassword: enteredForm.confirmPassword,
-        };
-        if (!validateForm("signUp", enteredForm)) {
-          setIsValidForm(false);
-          return;
-        }
-        signUp(signUpFormData);
-        break;
-      default:
-        return;
+    const signUpFormData: SignUpDto = {
+      email: enteredForm.email,
+      password: enteredForm.password,
+      confirmPassword: enteredForm.confirmPassword,
+    };
+    if (!validateForm("signUp", enteredForm)) {
+      setIsValidForm(false);
+      return;
     }
+    signUp(signUpFormData);
   };
 
   return (
     <form className="flex flex-col w-full gap-4" onSubmit={onSubmitHandler}>
-      {formState.map(item => {
+      {formStateData.signUpData.map(item => {
         return (
-          <div className="flex flex-col gap-2" key={`${title}${item.name}`}>
+          <div className="flex flex-col gap-2" key={`${"Sign up"}${item.name}`}>
             <label
               className={`font-bold text-sm ${
                 validateForm(item.name, enteredForm)

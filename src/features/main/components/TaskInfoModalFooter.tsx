@@ -1,17 +1,16 @@
-import { useRecoilValue } from "recoil";
 import { Select, SelectItem } from "@nextui-org/react";
 import React from "react";
-import { useSetTasksColumn } from "../hooks";
-import { columnsState } from "../stores";
+import { useGetColumns, useSetTasksColumn } from "../hooks";
 import { useQueryClient } from "@tanstack/react-query";
 import { Task } from "@prisma/client";
+import { useParams } from "next/navigation";
 
 const TaskInfoModalFooter: React.FC<{
   columnId: number;
   taskId: number;
 }> = ({ columnId, taskId }) => {
-  const columns = useRecoilValue(columnsState);
-
+  const params = useParams();
+  const { data: columns } = useGetColumns(Number(params.id));
   const { mutate } = useSetTasksColumn();
 
   const queryClient = useQueryClient();
@@ -26,7 +25,6 @@ const TaskInfoModalFooter: React.FC<{
       return updateData.filter(item => {
         if (item.task_id === taskId) {
           targetTask = item;
-          console.log(targetTask);
         }
         return item.task_id !== taskId;
       });
@@ -37,6 +35,10 @@ const TaskInfoModalFooter: React.FC<{
     });
   };
 
+  if (!columns) {
+    return null;
+  }
+
   return (
     <footer className={"flex flex-col gap-2"}>
       <h3 className={"text-sm font-bold -text--Medium-Grey"}>Current Status</h3>
@@ -44,7 +46,7 @@ const TaskInfoModalFooter: React.FC<{
         aria-label={"select column menu"}
         onChange={onChangeHandler}
         variant={"bordered"}
-        defaultSelectedKeys={[`${columnId}`]}
+        defaultSelectedKeys={`${columnId}`}
         labelPlacement={"outside-left"}
         radius={"sm"}
         size={"md"}

@@ -5,19 +5,17 @@ import { RootColumn } from "@/types/prisma-type";
 import ColumnContainer from "./ColumnContainer";
 import { useRecoilState } from "recoil";
 import { columnsState } from "../stores";
+import { useParams } from "next/navigation";
+import { useGetColumns } from "../hooks";
 
-const ColumnRoot: React.FC<{
-  columns: RootColumn[];
-}> = ({ columns }) => {
-  const [_, setColumns] = useRecoilState(columnsState);
+const ColumnRoot: React.FC<{}> = () => {
+  const params = useParams();
 
-  useEffect(() => {
-    setColumns(columns);
-  }, [setColumns, columns]);
+  const { data: columns } = useGetColumns(Number(params.id));
 
   return (
     <>
-      {columns.map(item => {
+      {columns?.map(item => {
         return (
           <ColumnContainer
             key={`${item.column_id} ColumnContainer`}

@@ -1,6 +1,7 @@
 import { SERVER_URL } from "@/const";
 import { Board, Column, SubTask, Task } from "@prisma/client";
 import { CreateBoardDto } from "../types";
+import { CreateNewTaskDto } from "@/types/task-type";
 
 export const getSubtasksFetch = async (taskId: number) => {
   const response = await fetch(`${SERVER_URL}/subtasks/${taskId}`);
@@ -76,4 +77,11 @@ export const getBoardsFetch = async () => {
     throw new Error("Network response was not ok");
   }
   return (await result.json()) as Pick<Board, "board_id" | "title">[];
+};
+
+export const createTaskFetch = async (data: CreateNewTaskDto) => {
+  return fetch(`${SERVER_URL}/tasks`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 };

@@ -1,4 +1,4 @@
-import { AuthRoot } from "@/features/auth";
+import { AuthRoot } from "@/features/signUp";
 
 const AuthPage = () => {
   return <AuthRoot />;

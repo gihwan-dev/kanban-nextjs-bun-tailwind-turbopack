@@ -16,21 +16,8 @@ export type EnteredForm = {
 };
 
 export type FormState = {
-  state: "login" | "signUp";
   isLoading: boolean;
   isError: boolean;
-  loginData: [
-    {
-      name: "email";
-      type: "email";
-      label: "email";
-    },
-    {
-      name: "password";
-      type: "password";
-      label: "password";
-    },
-  ];
   signUpData: [
     {
       name: "email";

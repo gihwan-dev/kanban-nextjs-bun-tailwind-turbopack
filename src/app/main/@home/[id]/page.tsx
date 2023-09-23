@@ -23,7 +23,7 @@ const IdMainPage = () => {
           <EmptyColumn />
         ) : (
           <>
-            <ColumnRoot columns={columns} />
+            <ColumnRoot />
             <AddColumnButton />
           </>
         )}

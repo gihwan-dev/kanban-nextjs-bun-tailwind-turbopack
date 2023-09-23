@@ -36,7 +36,7 @@ const TaskItem: React.FC<{
       <li
         onClick={onTaskClickHandler}
         className={
-          "flex flex-col px-4 py-6 rounded-lg w-full -bg--White shadow-task-card gap-2 relative cursor-pointer"
+          "flex flex-col px-4 py-6 rounded-lg w-full -bg--White shadow-task-card gap-2 cursor-pointer"
         }
       >
         <header className={"text-base font-bold -text--Black"}>

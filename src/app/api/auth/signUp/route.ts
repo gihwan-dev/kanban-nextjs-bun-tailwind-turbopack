@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createOne } from "./handler";
 import { StatusCodes } from "http-status-codes";
-import { SignUpDto } from "@/features/auth";
+import { SignUpDto } from "@/features/signUp";
 
 export const POST = async (req: Request) => {
   try {

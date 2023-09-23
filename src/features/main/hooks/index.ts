@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   addColumnsFetch,
   addNewBoardFetch,
+  createTaskFetch,
   getBoardsFetch,
   getColumnsFetch,
   getColumnsTaskCountFetch,
@@ -11,6 +12,7 @@ import {
   setTasksColumnFetch,
 } from "../api";
 import { CreateBoardDto } from "../types";
+import { CreateNewTaskDto } from "@/types/task-type";
 
 export const useGetSubtasks = (taskId: number) => {
   return useQuery({
@@ -82,5 +84,12 @@ export const useGetBoards = () => {
   return useQuery({
     queryKey: ["boards"],
     queryFn: getBoardsFetch,
+  });
+};
+
+export const useCreateTask = () => {
+  return useMutation({
+    mutationKey: ["tasks"],
+    mutationFn: (data: CreateNewTaskDto) => createTaskFetch(data),
   });
 };

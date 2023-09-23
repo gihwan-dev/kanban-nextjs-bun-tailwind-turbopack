@@ -23,7 +23,11 @@ const EllipsisMenu = () => {
           </button>
           <button
             className={buttonClassName + " -text--Red font-bold"}
-            onClick={() => signOut()}
+            onClick={() =>
+              signOut({
+                redirect: true,
+              })
+            }
           >
             Sign out
           </button>

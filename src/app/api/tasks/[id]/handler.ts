@@ -4,7 +4,7 @@ import {
   deleteTask,
   getColumnsTask,
   setTasksColumn,
-} from "@/services/prisma-task.service";
+} from "@/services/prisma-task-service";
 
 export const setTasksColumnHandler = async (
   taskId: number,

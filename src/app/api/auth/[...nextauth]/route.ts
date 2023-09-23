@@ -9,7 +9,7 @@ export const option: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         email: { label: "email", type: "text" },
-        password: { label: "password", type: "text" },
+        password: { label: "password", type: "password" },
       },
       authorize: async (credentials, req) => {
         if (typeof credentials !== "undefined") {
