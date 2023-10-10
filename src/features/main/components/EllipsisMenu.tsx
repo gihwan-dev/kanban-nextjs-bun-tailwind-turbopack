@@ -1,10 +1,15 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
+import EditBoardModal from "./EditBoardModal";
 
 const buttonClassName = "text-sm";
 
-const EllipsisMenu = () => {
+const EllipsisMenu: React.FC<{
+  onEditClickHandler: () => void;
+  onDeleteClickHandler: () => void;
+}> = ({ onEditClickHandler, onDeleteClickHandler }) => {
   const session = useSession();
 
   return (
@@ -15,10 +20,16 @@ const EllipsisMenu = () => {
     >
       {session.status === "authenticated" ? (
         <>
-          <button className={buttonClassName + " -text--Medium-Grey"}>
+          <button
+            onClick={onEditClickHandler}
+            className={buttonClassName + " -text--Medium-Grey"}
+          >
             Edit Board
           </button>
-          <button className={buttonClassName + " -text--Red"}>
+          <button
+            onClick={onDeleteClickHandler}
+            className={buttonClassName + " -text--Red"}
+          >
             Delete Board
           </button>
           <button

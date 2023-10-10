@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import IconCross from "@/assets/icon-cross";
 import { validateColumns } from "@/utils/validatation";
 import { useAddBoard } from "../hooks";
-import { useRouter } from "next/navigation";
 import LoadingModal from "@/components/LoadingModal";
 
 const labelClassName = "text-sm font-bold -text--Medium-Grey";
@@ -23,8 +22,6 @@ const CreateBoardModal: React.FC<{
   ]);
 
   const { mutate, isSuccess, isLoading } = useAddBoard();
-
-  const router = useRouter();
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,10 +61,6 @@ const CreateBoardModal: React.FC<{
 
   if (isSuccess) {
     onClose();
-    setTimeout(() => {
-      router.refresh();
-    }, 1000);
-    return null;
   }
 
   return mounted

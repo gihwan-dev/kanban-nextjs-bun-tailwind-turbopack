@@ -13,11 +13,23 @@ import { useParams, useRouter } from "next/navigation";
 import EllipsisMenu from "./EllipsisMenu";
 import { useGetBoards } from "../hooks";
 import AddNewTaskModal from "./AddNewTaskModal";
+import EditBoardModal from "./EditBoardModal";
 
 const MainHeaderNavRoot: React.FC<{}> = () => {
   const [navStateData, setNav] = useRecoilState(navState);
   const [openMenu, setOpenMenu] = useState(false);
   const [openTaskMenu, setOpenTaskMenu] = useState(false);
+
+  const [openEditMenu, setOpenEditMenu] = useState(false);
+
+  const onEditClickHandler = () => {
+    setOpenMenu(false);
+    setOpenEditMenu(prev => !prev);
+  };
+
+  const onDeleteClickHandler = () => {
+    setOpenMenu(false);
+  };
 
   const router = useRouter();
 
@@ -88,13 +100,17 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
               onClick={() => setOpenMenu(false)}
               className={"absolute w-full h-full top-0 left-0"}
             />{" "}
-            <EllipsisMenu />
+            <EllipsisMenu
+              onEditClickHandler={onEditClickHandler}
+              onDeleteClickHandler={onDeleteClickHandler}
+            />
           </>
         ) : null}
         {openTaskMenu ? (
           <AddNewTaskModal onClose={onClickAddNewTaskModal} />
         ) : null}
       </header>
+      {openEditMenu && <EditBoardModal onClose={onEditClickHandler} />}
     </>
   );
 };

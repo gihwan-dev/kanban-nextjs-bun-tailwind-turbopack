@@ -14,6 +14,10 @@ const SelectBoardMenuList: React.FC = () => {
     }));
   };
 
+  if (!nav.boards || nav.boards.length < 1) {
+    return null;
+  }
+
   return (
     <div
       onClick={onClickHandler}
