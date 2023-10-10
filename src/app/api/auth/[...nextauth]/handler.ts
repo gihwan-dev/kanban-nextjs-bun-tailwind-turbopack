@@ -1,4 +1,5 @@
 import { comparePassword } from "@/utils/hash";
+import prisma from "@/lib/prisma";
 
 type AuthHandlerResponse = {
   email: string;

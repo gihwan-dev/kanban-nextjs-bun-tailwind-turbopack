@@ -6,6 +6,7 @@ import { EnteredForm, LogInDto, SignUpDto } from "../types";
 import { useSignUp } from "../hooks";
 import { validateForm } from "../utils";
 import { formState } from "../stores";
+import { useRouter } from "next/navigation";
 
 const AuthForm = () => {
   const [enteredForm, setEnteredForm] = useState<EnteredForm>({
@@ -15,7 +16,9 @@ const AuthForm = () => {
   });
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const { mutate: signUp, isLoading, isError } = useSignUp();
+  const { mutate: signUp, isLoading, isError, isSuccess } = useSignUp();
+
+  const router = useRouter();
 
   const formStateData = useRecoilValue(formState);
 
@@ -41,6 +44,10 @@ const AuthForm = () => {
     }
     signUp(signUpFormData);
   };
+
+  if (isSuccess) {
+    router.push("/signIn");
+  }
 
   return (
     <form className="flex flex-col w-full gap-4" onSubmit={onSubmitHandler}>
