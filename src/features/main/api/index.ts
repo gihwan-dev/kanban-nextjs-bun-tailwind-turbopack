@@ -85,3 +85,9 @@ export const createTaskFetch = async (data: CreateNewTaskDto) => {
     body: JSON.stringify(data),
   });
 };
+
+export const deleteColumnFetch = async (id: number) => {
+  return fetch(`${SERVER_URL}/columns/${id}`, {
+    method: "DELETE",
+  });
+};

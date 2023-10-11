@@ -25,3 +25,11 @@ export const getColumnTaskCount = async (columnId: number) => {
     },
   });
 };
+
+export const deleteColumn = async (id: number) => {
+  return prisma.column.delete({
+    where: {
+      column_id: id,
+    },
+  });
+};

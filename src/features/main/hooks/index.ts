@@ -3,6 +3,7 @@ import {
   addColumnsFetch,
   addNewBoardFetch,
   createTaskFetch,
+  deleteColumnFetch,
   getBoardsFetch,
   getColumnsFetch,
   getColumnsTaskCountFetch,
@@ -91,5 +92,12 @@ export const useCreateTask = () => {
   return useMutation({
     mutationKey: ["tasks"],
     mutationFn: (data: CreateNewTaskDto) => createTaskFetch(data),
+  });
+};
+
+export const useDeleteColumn = () => {
+  return useMutation({
+    mutationKey: ["columns"],
+    mutationFn: (id: number) => deleteColumnFetch(id),
   });
 };

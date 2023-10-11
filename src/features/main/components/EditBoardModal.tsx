@@ -1,18 +1,22 @@
 import Modal from "@/components/Modal";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { navState } from "../stores";
-import { useGetColumns } from "../hooks";
+import { useDeleteColumn, useGetColumns } from "../hooks";
 import { useParams } from "next/navigation";
 import IconCross from "@/assets/icon-cross";
-import { Column } from "@prisma/client";
+import { useQueryClient } from "@tanstack/react-query";
 
 const EditBoardModal: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const [mount, setMount] = useState(false);
   const [newColumns, setNewColumns] = useState<string[]>([]);
+
+  const { mutate } = useDeleteColumn();
+
+  const queryClient = useQueryClient();
   const params = useParams();
 
   const board = useRecoilValue(navState).selectedBoard;
@@ -21,6 +25,7 @@ const EditBoardModal: React.FC<{
     data: columns,
     isLoading,
     isError,
+    refetch,
   } = useGetColumns(Number(params.id));
 
   useEffect(() => {
@@ -31,7 +36,13 @@ const EditBoardModal: React.FC<{
     return null;
   }
 
-  const deleteExistingColumnHandler = (index: number) => {};
+  const deleteExistingColumnHandler = (id: number) => {
+    mutate(id, {
+      onSuccess: () => {
+        refetch();
+      },
+    });
+  };
 
   const deleteNewColumnHandler = (targetIndex: number) => {
     setNewColumns(prev => {
@@ -63,7 +74,7 @@ const EditBoardModal: React.FC<{
               Board Columns
             </label>
             <div className="flex flex-col gap-3">
-              {columns.map((item, index) => {
+              {columns.map(item => {
                 return (
                   <li
                     className="flex flex-row items-center w-full gap-3"
@@ -74,7 +85,10 @@ const EditBoardModal: React.FC<{
                       className="border -border--lines-light px-4 py-2 flex-1"
                     ></input>
                     <IconCross
-                      onClick={deleteExistingColumnHandler.bind(null, index)}
+                      onClick={deleteExistingColumnHandler.bind(
+                        null,
+                        item.column_id,
+                      )}
                     />
                   </li>
                 );
