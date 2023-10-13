@@ -1,8 +1,6 @@
 "use client";
 
 import { signOut, useSession } from "next-auth/react";
-import { useState } from "react";
-import EditBoardModal from "./EditBoardModal";
 
 const buttonClassName = "text-sm";
 

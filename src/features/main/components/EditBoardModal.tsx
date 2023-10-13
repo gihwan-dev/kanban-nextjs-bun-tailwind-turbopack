@@ -1,12 +1,13 @@
 import Modal from "@/components/Modal";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { navState } from "../stores";
-import { useDeleteColumn, useGetColumns } from "../hooks";
+import { useGetColumns, useUpdateBoard } from "../hooks";
 import { useParams } from "next/navigation";
 import IconCross from "@/assets/icon-cross";
-import { useQueryClient } from "@tanstack/react-query";
+import { deleteModalState } from "@/stores";
+import { UpdateBoardDto } from "@/app/api/boards/[id]/type";
 
 const EditBoardModal: React.FC<{
   onClose: () => void;
@@ -14,18 +15,18 @@ const EditBoardModal: React.FC<{
   const [mount, setMount] = useState(false);
   const [newColumns, setNewColumns] = useState<string[]>([]);
 
-  const { mutate } = useDeleteColumn();
+  const [_, setDeleteState] = useRecoilState(deleteModalState);
 
-  const queryClient = useQueryClient();
   const params = useParams();
 
   const board = useRecoilValue(navState).selectedBoard;
+
+  const { mutate } = useUpdateBoard();
 
   const {
     data: columns,
     isLoading,
     isError,
-    refetch,
   } = useGetColumns(Number(params.id));
 
   useEffect(() => {
@@ -37,10 +38,11 @@ const EditBoardModal: React.FC<{
   }
 
   const deleteExistingColumnHandler = (id: number) => {
-    mutate(id, {
-      onSuccess: () => {
-        refetch();
-      },
+    setDeleteState({
+      isOpen: true,
+      targetId: id,
+      title: "column",
+      type: "columns",
     });
   };
 
@@ -53,6 +55,14 @@ const EditBoardModal: React.FC<{
   const addNewColumnHandler = () => {
     setNewColumns(prev => [...prev, Math.random().toFixed(2).toString()]);
   };
+
+  // const onClickHandler = () => {
+  //   const form: UpdateBoardDto = {
+  //     title: board.title,
+  //     columns:
+  //   }
+  //   mutate({ id, for})
+  // }
 
   return (
     mount &&
@@ -81,7 +91,7 @@ const EditBoardModal: React.FC<{
                     key={item.column_id + "EditBoardModal"}
                   >
                     <input
-                      defaultValue={item.title}
+                      defaultValue={item.title + " (existing)"}
                       className="border -border--lines-light px-4 py-2 flex-1"
                     ></input>
                     <IconCross
@@ -114,7 +124,10 @@ const EditBoardModal: React.FC<{
               </button>
             </div>
           </ul>
-          <button className="-bg--Main-Purple -text--White font-bold py-2 rounded-full hover:bg-opacity-25">
+          <button
+            onClick={}
+            className="-bg--Main-Purple -text--White font-bold py-2 rounded-full hover:bg-opacity-25"
+          >
             Save Changes
           </button>
         </main>

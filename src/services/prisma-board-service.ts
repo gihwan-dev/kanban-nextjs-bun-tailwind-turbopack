@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { CreateBoardDto } from "@/features/main";
+import { UpdateBoardDto } from "@/app/api/boards/[id]/type";
 
 export const getBoardsService = async (email: string) => {
   return prisma.board.findMany({
@@ -51,6 +52,24 @@ export const createNewBoard = async (data: CreateBoardDto, email: string) => {
         }),
       },
       user_id: user_id.id,
+    },
+  });
+};
+
+export const updateBoard = async (boardId: number, form: UpdateBoardDto) => {
+  return prisma.board.update({
+    where: {
+      board_id: boardId,
+    },
+    data: {
+      columns: {
+        create: form.columns.map(item => {
+          return {
+            title: item,
+          };
+        }),
+      },
+      title: form.title,
     },
   });
 };

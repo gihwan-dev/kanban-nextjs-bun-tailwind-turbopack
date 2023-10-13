@@ -2,6 +2,7 @@ import { SERVER_URL } from "@/const";
 import { Board, Column, SubTask, Task } from "@prisma/client";
 import { CreateBoardDto } from "../types";
 import { CreateNewTaskDto } from "@/types/task-type";
+import { UpdateBoardDto } from "@/app/api/boards/[id]/type";
 
 export const getSubtasksFetch = async (taskId: number) => {
   const response = await fetch(`${SERVER_URL}/subtasks/${taskId}`);
@@ -86,8 +87,9 @@ export const createTaskFetch = async (data: CreateNewTaskDto) => {
   });
 };
 
-export const deleteColumnFetch = async (id: number) => {
-  return fetch(`${SERVER_URL}/columns/${id}`, {
-    method: "DELETE",
+export const updateBoardFetch = async (id: string, form: UpdateBoardDto) => {
+  return fetch(`${SERVER_URL}/boards/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(form),
   });
 };

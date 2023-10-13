@@ -3,7 +3,6 @@ import {
   addColumnsFetch,
   addNewBoardFetch,
   createTaskFetch,
-  deleteColumnFetch,
   getBoardsFetch,
   getColumnsFetch,
   getColumnsTaskCountFetch,
@@ -11,9 +10,11 @@ import {
   getSubtasksFetch,
   setSubtasksFetch,
   setTasksColumnFetch,
+  updateBoardFetch,
 } from "../api";
 import { CreateBoardDto } from "../types";
 import { CreateNewTaskDto } from "@/types/task-type";
+import { UpdateBoardDto } from "@/app/api/boards/[id]/type";
 
 export const useGetSubtasks = (taskId: number) => {
   return useQuery({
@@ -95,9 +96,10 @@ export const useCreateTask = () => {
   });
 };
 
-export const useDeleteColumn = () => {
+export const useUpdateBoard = () => {
   return useMutation({
-    mutationKey: ["columns"],
-    mutationFn: (id: number) => deleteColumnFetch(id),
+    mutationKey: ["boards"],
+    mutationFn: ({ id, form }: { id: string; form: UpdateBoardDto }) =>
+      updateBoardFetch(id, form),
   });
 };

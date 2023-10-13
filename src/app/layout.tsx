@@ -25,8 +25,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <MyQueryProvider>
             <MySessionProvider session={session}>
               <MyNextUIProvider>
-                {children}
                 <div id={"modal"}></div>
+                {children}
               </MyNextUIProvider>
             </MySessionProvider>
           </MyQueryProvider>

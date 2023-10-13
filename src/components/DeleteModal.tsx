@@ -6,14 +6,15 @@ import { useDelete } from "@/hooks";
 import { useRouter } from "next/navigation";
 import LoadingModal from "@/components/LoadingModal";
 import SuccessModal from "@/components/SuccessModal";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DeleteModal = () => {
   const [deleteStateData, setDeleteStateData] =
     useRecoilState(deleteModalState);
 
-  const router = useRouter();
-
   const { mutate, isSuccess, isLoading } = useDelete();
+
+  const queryClient = useQueryClient();
 
   const getParagraph = () => {
     switch (deleteStateData.type) {
@@ -34,10 +35,21 @@ const DeleteModal = () => {
   };
 
   const onDeleteHandler = () => {
-    mutate({
-      targetId: deleteStateData.targetId as number,
-      type: deleteStateData.type as "tasks" | "columns" | "boards" | "subtasks",
-    });
+    mutate(
+      {
+        targetId: deleteStateData.targetId as number,
+        type: deleteStateData.type as
+          | "tasks"
+          | "columns"
+          | "boards"
+          | "subtasks",
+      },
+      {
+        onSuccess: () => {
+          queryClient.refetchQueries([deleteStateData.type]);
+        },
+      },
+    );
   };
 
   if (isLoading) {
@@ -53,7 +65,6 @@ const DeleteModal = () => {
         };
       });
     }, 1500);
-    router.refresh();
     return <SuccessModal />;
   }
 
