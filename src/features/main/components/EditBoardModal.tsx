@@ -56,19 +56,39 @@ const EditBoardModal: React.FC<{
     setNewColumns(prev => [...prev, Math.random().toFixed(2).toString()]);
   };
 
-  // const onClickHandler = () => {
-  //   const form: UpdateBoardDto = {
-  //     title: board.title,
-  //     columns:
-  //   }
-  //   mutate({ id, for})
-  // }
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formElement = e.target as HTMLFormElement;
+
+    const targetColumns = columns?.map((item, index) => {
+      const inputElement = formElement.elements[index + 1] as HTMLInputElement;
+      return inputElement.value;
+    });
+
+    const targetNewColumns = newColumns.map((item, index) => {
+      const inputElement = formElement.elements[
+        index + columns.length
+      ] as HTMLInputElement;
+      return inputElement.value;
+    });
+
+    const id = params.id as string;
+    const form: UpdateBoardDto = {
+      title: board.title,
+      newColumns: [...targetNewColumns],
+      columns: [...targetColumns],
+    };
+    mutate({ id, form });
+  };
 
   return (
     mount &&
     createPortal(
       <Modal onBackdropClick={onClose}>
-        <main className="fixed flex flex-col -bg--White top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-8 rounded-lg gap-4 w-72">
+        <form
+          onSubmit={onSubmitHandler}
+          className="fixed flex flex-col -bg--White top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-6 py-8 rounded-lg gap-4 w-72"
+        >
           <h1 className="text-xl font-bold">Edit Board</h1>
           <div className="flex flex-col gap-2">
             <label className="text-xs font-bold -text--Medium-Grey">
@@ -117,6 +137,7 @@ const EditBoardModal: React.FC<{
                 );
               })}
               <button
+                type="button"
                 onClick={addNewColumnHandler}
                 className="-bg--Main-Purple bg-opacity-10 -text--Main-Purple font-bold py-2 rounded-full hover:-bg--White"
               >
@@ -125,12 +146,12 @@ const EditBoardModal: React.FC<{
             </div>
           </ul>
           <button
-            onClick={}
+            type="submit"
             className="-bg--Main-Purple -text--White font-bold py-2 rounded-full hover:bg-opacity-25"
           >
             Save Changes
           </button>
-        </main>
+        </form>
       </Modal>,
       document.getElementById("modal") as Element,
     )
