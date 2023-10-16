@@ -28,7 +28,6 @@ const TaskItem: React.FC<{
 
   const onCloseModal = () => {
     setOpenModal(false);
-    router.refresh();
   };
 
   return (
