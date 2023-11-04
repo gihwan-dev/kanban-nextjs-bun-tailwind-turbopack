@@ -7,7 +7,6 @@
 Kanban Management 애플리케이션은 작업 관리와 팀 협업을 용이하게 하기 위한 도구입니다. 이 애플리케이션을 통해 사용자는 작업을 쉽게 추가, 삭제, 그리고 정렬할 수 있습니다.
 
 ## 기능
-
 - 작업 추가
 - 작업 삭제
 - 작업 간 우선순위 조정
@@ -15,13 +14,17 @@ Kanban Management 애플리케이션은 작업 관리와 팀 협업을 용이하
 
 ## 미리보기
 
-[프로젝트 미리보기 이미지](이미지 링크)
+<img width="301" alt="image" src="https://github.com/gihwan-dev/kanban-nextjs-bun-tailwind-turbopack/assets/84307361/5b73cd39-c912-4c7e-94c6-eac77164d0fe">
+<img width="301" alt="image" src="https://github.com/gihwan-dev/kanban-nextjs-bun-tailwind-turbopack/assets/84307361/953e2e28-b442-4637-96a0-5b59fa2eaaa2">
+<img width="299" alt="image" src="https://github.com/gihwan-dev/kanban-nextjs-bun-tailwind-turbopack/assets/84307361/d22c740a-19c6-4409-b964-6c500bee147e">
+
+
 
 ## 기술 스택
 
-- **프레임워크:** Next.js
-- **스타일링:** Tailwind CSS
-- **배포:** Vercel
+- **프레임워크:** <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+- **스타일링:** <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+- **배포:** <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
 - **상태 관리:** Recoil
 
 ## 설치 방법
@@ -64,9 +67,6 @@ Pull Request를 생성합니다.
 
 저자 및 기여자 정보
 - 초기 작업 - gihwan-dev
-- 
+
 문의
 질문이나 제안이 있으시면 이슈 트래커를 통해 문의해주세요.
-
-diff
-Copy code
