@@ -78,7 +78,11 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
 
   return (
     <>
-      <header className={"flex flex-row justify-between px-4 py-4 w-full"}>
+      <header
+        className={
+          "flex flex-row justify-between items-center px-4 py-4 w-full"
+        }
+      >
         <SelectBoardNavMenu />
         <div className={"flex flex-row items-center gap-4"}>
           <button
