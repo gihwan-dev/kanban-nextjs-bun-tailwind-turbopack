@@ -1,7 +1,11 @@
 import { getColumnService } from "@/services/prisma-column-service";
 import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
-import { addNewColumns, updateBoard } from "@/services/prisma-board-service";
+import {
+  addNewColumns,
+  deleteBoard,
+  updateBoard,
+} from "@/services/prisma-board-service";
 import { UpdateBoardDto } from "./type";
 
 export const getColumnsHandler = async (boardId: number) => {
@@ -25,6 +29,15 @@ export const updateBoardHandler = async (
   form: UpdateBoardDto,
 ) => {
   const result = await updateBoard(boardId, form);
+
+  if (!result) {
+    return NextResponse.json({}, { status: StatusCodes.NOT_FOUND });
+  }
+  return NextResponse.json({}, { status: StatusCodes.OK });
+};
+
+export const deleteBoardHandler = async (boardId: number) => {
+  const result = await deleteBoard(boardId);
 
   if (!result) {
     return NextResponse.json({}, { status: StatusCodes.NOT_FOUND });

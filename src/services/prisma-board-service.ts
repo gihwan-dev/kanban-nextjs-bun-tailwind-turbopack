@@ -73,3 +73,11 @@ export const updateBoard = async (boardId: number, form: UpdateBoardDto) => {
     },
   });
 };
+
+export const deleteBoard = async (boardId: number) => {
+  return prisma.board.delete({
+    where: {
+      board_id: boardId,
+    },
+  });
+};

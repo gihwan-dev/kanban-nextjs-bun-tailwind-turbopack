@@ -3,6 +3,7 @@ import { Params } from "@/types/params";
 import { StatusCodes } from "http-status-codes";
 import {
   addColumnsHandler,
+  deleteBoardHandler,
   getColumnsHandler,
   updateBoardHandler,
 } from "@/app/api/boards/[id]/handler";
@@ -30,6 +31,15 @@ export const PATCH = async (req: NextRequest, { params }: Params) => {
     const id = Number(params.id);
     const form = (await req.json()) as UpdateBoardDto;
     return updateBoardHandler(id, form);
+  } catch (error) {
+    return NextResponse.json({}, { status: StatusCodes.INTERNAL_SERVER_ERROR });
+  }
+};
+
+export const DELETE = async (req: NextRequest, { params }: Params) => {
+  try {
+    const id = Number(params.id);
+    return await deleteBoardHandler(id);
   } catch (error) {
     return NextResponse.json({}, { status: StatusCodes.INTERNAL_SERVER_ERROR });
   }

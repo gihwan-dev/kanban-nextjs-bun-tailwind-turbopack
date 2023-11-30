@@ -14,6 +14,7 @@ import EllipsisMenu from "./EllipsisMenu";
 import { useGetBoards } from "../hooks";
 import AddNewTaskModal from "./AddNewTaskModal";
 import EditBoardModal from "./EditBoardModal";
+import { deleteModalState } from "@/stores";
 
 const MainHeaderNavRoot: React.FC<{}> = () => {
   const [navStateData, setNav] = useRecoilState(navState);
@@ -21,6 +22,10 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
   const [openTaskMenu, setOpenTaskMenu] = useState(false);
 
   const [openEditMenu, setOpenEditMenu] = useState(false);
+  const [openDeleteMenu, setOpenDeleteMenu] = useState(false);
+
+  const [deleteStateData, setDeleteStateData] =
+    useRecoilState(deleteModalState);
 
   const onEditClickHandler = () => {
     setOpenMenu(false);
@@ -28,6 +33,12 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
   };
 
   const onDeleteClickHandler = () => {
+    setDeleteStateData({
+      targetId: navStateData.selectedBoard.board_id,
+      isOpen: true,
+      title: navStateData.selectedBoard.title,
+      type: "boards",
+    });
     setOpenMenu(false);
   };
 
