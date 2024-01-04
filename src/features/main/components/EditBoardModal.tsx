@@ -67,7 +67,7 @@ const EditBoardModal: React.FC<{
 
     const targetNewColumns = newColumns.map((item, index) => {
       const inputElement = formElement.elements[
-        index + columns.length
+        index + (columns?.length || 0)
       ] as HTMLInputElement;
       return inputElement.value;
     });
@@ -76,7 +76,7 @@ const EditBoardModal: React.FC<{
     const form: UpdateBoardDto = {
       title: board.title,
       newColumns: [...targetNewColumns],
-      columns: [...targetColumns],
+      columns: [...(targetColumns || [])],
     };
     mutate({ id, form });
   };
@@ -104,7 +104,7 @@ const EditBoardModal: React.FC<{
               Board Columns
             </label>
             <div className="flex flex-col gap-3">
-              {columns.map(item => {
+              {columns?.map(item => {
                 return (
                   <li
                     className="flex flex-row items-center w-full gap-3"
