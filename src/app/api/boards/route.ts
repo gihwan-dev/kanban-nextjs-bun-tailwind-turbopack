@@ -9,15 +9,15 @@ import { CreateBoardDto } from "@/features/main";
 export const POST = async (req: NextRequest) => {
   try {
     const data = (await req.json()) as CreateBoardDto;
-    return createNewBoardHandler(data);
+    return createNewBoardHandler(req, data);
   } catch (e) {
     return NextResponse.json({}, { status: StatusCodes.INTERNAL_SERVER_ERROR });
   }
 };
 
-export const GET = async () => {
+export const GET = async (req: NextRequest) => {
   try {
-    return getBoardHandler();
+    return getBoardHandler(req);
   } catch (e) {
     return NextResponse.json({}, { status: StatusCodes.INTERNAL_SERVER_ERROR });
   }
