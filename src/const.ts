@@ -1,1 +1,1 @@
-export const SERVER_URL = "/api";
+export const SERVER_URL = "https://kanban.gihwan-dev.com/api";
