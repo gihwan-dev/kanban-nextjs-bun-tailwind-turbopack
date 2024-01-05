@@ -13,7 +13,7 @@ export const createNewBoardHandler = async (
 ) => {
   const session = await getServerSession();
   if (!session || !session?.user?.email) {
-    return NextResponse.redirect(new URL("/signIn", req.url));
+    return NextResponse.json({}, { status: StatusCodes.UNAUTHORIZED });
   }
 
   const result = createNewBoard(data, session.user.email);
@@ -27,7 +27,7 @@ export const createNewBoardHandler = async (
 export const getBoardHandler = async (req: NextRequest) => {
   const session = await getServerSession();
   if (!session || !session?.user?.email) {
-    return NextResponse.redirect(new URL("signIn", req.url));
+    return NextResponse.json({}, { status: StatusCodes.UNAUTHORIZED });
   }
   const boards = await getBoardsService(session.user.email);
 
