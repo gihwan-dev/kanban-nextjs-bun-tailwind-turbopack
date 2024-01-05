@@ -33,6 +33,7 @@ const AuthForm = () => {
   };
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const signUpFormData: SignUpDto = {
       email: enteredForm.email,
       password: enteredForm.password,
