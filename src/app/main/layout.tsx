@@ -15,6 +15,8 @@ const MainPage: React.FC<{
 }> = async ({ home, unAuth }) => {
   const session = await getServerSession();
 
+  console.log(session);
+
   return (
     <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
       <MainHeaderNavRoot />
