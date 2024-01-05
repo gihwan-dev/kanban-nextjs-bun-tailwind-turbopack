@@ -6,7 +6,7 @@ const MainPage = async () => {
     <section className="flex flex-col justify-center items-center h-full -bg--light-grey-light-bg gap-2">
       <h1 className="text-lg font-bold -text--Black">Not authorized</h1>
       <Link
-        href="/auth"
+        href="/signIn"
         className="font-bold -text--Main-Purple hover:-text--main-purple-hover"
       >
         Try to login
