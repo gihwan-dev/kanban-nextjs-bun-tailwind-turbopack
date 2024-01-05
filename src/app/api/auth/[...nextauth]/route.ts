@@ -6,10 +6,9 @@ import Credentials from "next-auth/providers/credentials";
 
 const option: AuthOptions = {
   pages: {
-    signIn: "/signIn",
-    signOut: "/signIn",
-    newUser: "/signUp",
-    error: "/signIn",
+    signIn: "https://kanban.gihwan-dev.com/signIn",
+    signOut: "https://kanban.gihwan-dev.com/signIn",
+    newUser: "https://kanban.gihwan-dev.com/signUp",
   },
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith("https"),
   providers: [
