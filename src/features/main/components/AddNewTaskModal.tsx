@@ -55,11 +55,9 @@ const AddNewTaskModal: React.FC<{
 
     mutate(dto, {
       onSuccess: () => {
-        queryClient.invalidateQueries([
-          "columns",
-          "tasks",
-          Number(taskStatusElement.value),
-        ]);
+        queryClient.invalidateQueries({
+          queryKey: ["columns", "tasks", Number(taskStatusElement.value)],
+        });
         onClose();
       },
     });

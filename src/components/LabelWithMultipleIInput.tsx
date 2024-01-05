@@ -13,16 +13,14 @@ const LabelWithMultipleInput: React.FC<{
 
   return (
     <div className="flex flex-col gap-2">
-      <label
-        placeholder={placeholder}
-        className="-text--Medium-Grey font-bold text-xs"
-      >
+      <label className="-text--Medium-Grey font-bold text-xs">
         {labelTitle}
       </label>
       <div className="flex flex-col gap-3">
         {inputList.map((item, index) => {
           return (
             <InputAlone
+              placeholder={placeholder}
               key={item}
               onClick={() => onClickDeleteHandler(index)}
             />

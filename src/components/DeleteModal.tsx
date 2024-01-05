@@ -3,7 +3,7 @@ import Modal from "@/components/Modal";
 import { useRecoilState } from "recoil";
 import { deleteModalState } from "@/stores";
 import { useDelete } from "@/hooks";
-import { useRouter } from "next/navigation";
+
 import LoadingModal from "@/components/LoadingModal";
 import SuccessModal from "@/components/SuccessModal";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ const DeleteModal = () => {
   const [deleteStateData, setDeleteStateData] =
     useRecoilState(deleteModalState);
 
-  const { mutate, isSuccess, isLoading } = useDelete();
+  const { mutate, isSuccess, isPending, isError } = useDelete();
 
   const queryClient = useQueryClient();
 
@@ -46,13 +46,15 @@ const DeleteModal = () => {
       },
       {
         onSuccess: () => {
-          queryClient.refetchQueries([deleteStateData.type]);
+          queryClient.refetchQueries({
+            queryKey: [deleteStateData.type],
+          });
         },
       },
     );
   };
 
-  if (isLoading) {
+  if (isPending || isError) {
     return <LoadingModal />;
   }
 

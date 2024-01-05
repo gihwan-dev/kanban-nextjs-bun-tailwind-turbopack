@@ -1,8 +1,10 @@
-import NextAuth, { NextAuthOptions } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { authenticate } from "./handler";
+import NextAuth from "next-auth";
 
-export const option: NextAuthOptions = {
+import { authenticate } from "@/app/api/auth/[...nextauth]/handler";
+import { AuthOptions } from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+
+const option: AuthOptions = {
   pages: {
     signIn: "/signIn",
     signOut: "/signIn",

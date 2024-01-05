@@ -2,14 +2,13 @@ import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 import { CreateBoardDto } from "@/features/main";
 import { getServerSession } from "next-auth";
-import { option } from "@/app/api/auth/[...nextauth]/route";
 import {
   createNewBoard,
   getBoardsService,
 } from "@/services/prisma-board-service";
 
 export const createNewBoardHandler = async (data: CreateBoardDto) => {
-  const session = await getServerSession(option);
+  const session = await getServerSession();
   if (!session || !session?.user?.email) {
     return NextResponse.redirect("/auth");
   }
@@ -23,7 +22,7 @@ export const createNewBoardHandler = async (data: CreateBoardDto) => {
 };
 
 export const getBoardHandler = async () => {
-  const session = await getServerSession(option);
+  const session = await getServerSession();
   if (!session || !session?.user?.email) {
     return NextResponse.redirect("/auth");
   }

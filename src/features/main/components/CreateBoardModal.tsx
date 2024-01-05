@@ -21,7 +21,7 @@ const CreateBoardModal: React.FC<{
     Math.random().toString().slice(0),
   ]);
 
-  const { mutate, isSuccess, isLoading } = useAddBoard();
+  const { mutate, isSuccess, isPending } = useAddBoard();
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ const CreateBoardModal: React.FC<{
     setMounted(true);
   }, []);
 
-  if (isLoading) {
+  if (isPending) {
     return <LoadingModal />;
   }
 

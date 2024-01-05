@@ -16,7 +16,7 @@ const AuthForm = () => {
   });
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const { mutate: signUp, isLoading, isError, isSuccess } = useSignUp();
+  const { mutate: signUp, isSuccess } = useSignUp();
 
   const router = useRouter();
 

@@ -21,7 +21,7 @@ export const useGetSubtasks = (taskId: number) => {
     queryKey: ["subtasks", taskId],
     queryFn: () => getSubtasksFetch(taskId),
     refetchOnWindowFocus: false,
-    cacheTime: Number.POSITIVE_INFINITY,
+    staleTime: Infinity,
   });
 };
 

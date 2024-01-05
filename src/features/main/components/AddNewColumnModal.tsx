@@ -16,7 +16,7 @@ const AddNewColumnModal: React.FC<{
 
   const [mounted, setMounted] = useState(false);
 
-  const { mutate, isSuccess } = useAddColumns();
+  const { mutate } = useAddColumns();
 
   const queryClient = useQueryClient();
 
@@ -48,10 +48,9 @@ const AddNewColumnModal: React.FC<{
       { boardId, data },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries([
-            "columns",
-            +navStateData.selectedBoard.board_id,
-          ]);
+          queryClient.invalidateQueries({
+            queryKey: ["columns", +navStateData.selectedBoard.board_id],
+          });
           onClose();
         },
       },

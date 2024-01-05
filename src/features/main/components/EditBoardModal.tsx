@@ -31,7 +31,7 @@ const EditBoardModal: React.FC<{
 
   useEffect(() => {
     setMount(true);
-  });
+  }, []);
 
   if (isLoading || isError) {
     return null;

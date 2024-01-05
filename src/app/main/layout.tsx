@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 
 import { MainHeaderNavRoot } from "@/features/main";
 import { getServerSession } from "next-auth";
-import { option } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +13,7 @@ const MainPage: React.FC<{
   home: React.ReactNode;
   unAuth: React.ReactNode;
 }> = async ({ home, unAuth }) => {
-  const session = await getServerSession(option);
+  const session = await getServerSession();
 
   return (
     <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
