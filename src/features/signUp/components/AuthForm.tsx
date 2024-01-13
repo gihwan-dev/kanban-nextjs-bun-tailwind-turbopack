@@ -7,6 +7,7 @@ import { useSignUp } from "../hooks";
 import { validateForm } from "../utils";
 import { formState } from "../stores";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const AuthForm = () => {
   const [enteredForm, setEnteredForm] = useState<EnteredForm>({
@@ -16,7 +17,7 @@ const AuthForm = () => {
   });
   const [isValidForm, setIsValidForm] = useState(true);
 
-  const { mutate: signUp, isSuccess } = useSignUp();
+  const { mutate: signUp } = useSignUp();
 
   const router = useRouter();
 
@@ -43,12 +44,16 @@ const AuthForm = () => {
       setIsValidForm(false);
       return;
     }
-    signUp(signUpFormData);
+    signUp(signUpFormData, {
+      onSuccess: data => {
+        if (data.ok) {
+          router.push("/signIn");
+          return;
+        }
+        window.alert("Fail to sign up... try again.");
+      },
+    });
   };
-
-  if (isSuccess) {
-    router.push("/signIn");
-  }
 
   return (
     <form className="flex flex-col w-full gap-4" onSubmit={onSubmitHandler}>
@@ -82,9 +87,15 @@ const AuthForm = () => {
       ) : (
         <p className="text-sm -text--Red font-bold">check form validation</p>
       )}
-      <button className="-bg--Main-Purple -text--White font-bold py-2 rounded-full hover:-bg--main-purple-hover">
+      <button
+        type="submit"
+        className="-bg--Main-Purple -text--White font-bold py-2 rounded-full hover:-bg--main-purple-hover"
+      >
         submit
       </button>
+      <Link className="text-center font-bold" href="/signIn">
+        Sign in
+      </Link>
     </form>
   );
 };

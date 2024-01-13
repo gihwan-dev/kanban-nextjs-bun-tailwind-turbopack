@@ -19,7 +19,7 @@ const SelectBoardMenuList: React.FC = () => {
   }
 
   return (
-    <div
+    <button
       onClick={onClickHandler}
       className={`flex flex-row gap-2 items-center cursor-pointer`}
     >
@@ -33,7 +33,7 @@ const SelectBoardMenuList: React.FC = () => {
       >
         <IconDownArrow />
       </div>
-    </div>
+    </button>
   );
 };
 

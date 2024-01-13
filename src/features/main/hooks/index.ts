@@ -1,3 +1,5 @@
+"use client";
+
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   addColumnsFetch,
@@ -15,6 +17,7 @@ import {
 import { CreateBoardDto } from "../types";
 import { CreateNewTaskDto } from "@/types/task-type";
 import { UpdateBoardDto } from "@/app/api/boards/[id]/type";
+import { useEffect, useState } from "react";
 
 export const useGetSubtasks = (taskId: number) => {
   return useQuery({
@@ -102,4 +105,19 @@ export const useUpdateBoard = () => {
     mutationFn: ({ id, form }: { id: string; form: UpdateBoardDto }) =>
       updateBoardFetch(id, form),
   });
+};
+
+export const useIsSmallScreen = () => {
+  const [width, setWidth] = useState(0);
+
+  const handleResize = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setWidth]);
+
+  return width < 768;
 };

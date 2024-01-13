@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ThemeSelectIcon: React.FC<{
   onClick: () => void;
@@ -11,6 +11,14 @@ const ThemeSelectIcon: React.FC<{
   };
 
   const [curState, setCurState] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const theme = localStorage.getItem("theme");
+    if (!theme) {
+      localStorage.setItem("theme", "light");
+      return;
+    }
+  }, []);
 
   const onClickHandler = () => {
     switch (curState) {

@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 
 import { MainHeaderNavRoot } from "@/features/main";
 import { getServerSession } from "next-auth";
+import { option } from "../api/auth/[...nextauth]/route";
+import BigScreenSideBar from "@/components/BigScreenSideBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,14 +15,19 @@ const MainPage: React.FC<{
   home: React.ReactNode;
   unAuth: React.ReactNode;
 }> = async ({ home, unAuth }) => {
-  const session = await getServerSession();
-
-  console.log(session);
+  const session = await getServerSession(option);
 
   return (
     <div className={"flex flex-col overflow-hidden w-screen h-screen"}>
-      <MainHeaderNavRoot />
-      {session ? home : unAuth}
+      <div className="w-full h-full md:flex md:flex-row overflow-hidden">
+        <BigScreenSideBar />
+        <div className="flex-1 h-full overflow-hidden">
+          <MainHeaderNavRoot />
+          <div className="w-full h-full overflow-auto">
+            {session ? home : unAuth}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

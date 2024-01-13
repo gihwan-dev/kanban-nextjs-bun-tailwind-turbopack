@@ -10,6 +10,7 @@ export const createOne = async (signUpDto: SignUpDto) => {
       email: signUpDto.email,
     },
   });
+
   if (existingUser) {
     return NextResponse.json(
       {

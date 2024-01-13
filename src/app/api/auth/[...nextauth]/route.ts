@@ -4,7 +4,7 @@ import { authenticate } from "@/app/api/auth/[...nextauth]/handler";
 import { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const option: AuthOptions = {
+export const option: AuthOptions = {
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith("https"),
   providers: [
     Credentials({

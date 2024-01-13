@@ -11,7 +11,7 @@ import { navState } from "../stores";
 import IconVerticalEllipsis from "@/assets/icon-vertical-ellipsis";
 import { useParams, useRouter } from "next/navigation";
 import EllipsisMenu from "./EllipsisMenu";
-import { useGetBoards } from "../hooks";
+import { useGetBoards, useIsSmallScreen } from "../hooks";
 import AddNewTaskModal from "./AddNewTaskModal";
 import EditBoardModal from "./EditBoardModal";
 import { deleteModalState } from "@/stores";
@@ -22,7 +22,8 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
   const [openTaskMenu, setOpenTaskMenu] = useState(false);
 
   const [openEditMenu, setOpenEditMenu] = useState(false);
-  const [openDeleteMenu, setOpenDeleteMenu] = useState(false);
+
+  const isSmallScreen = useIsSmallScreen();
 
   const [deleteStateData, setDeleteStateData] =
     useRecoilState(deleteModalState);
@@ -94,7 +95,7 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
           "flex flex-row justify-between items-center px-4 py-4 w-full"
         }
       >
-        <SelectBoardNavMenu />
+        {isSmallScreen ? <SelectBoardNavMenu /> : <div></div>}
         <div className={"flex flex-row items-center gap-4"}>
           <button
             onClick={onClickAddNewTaskModal}

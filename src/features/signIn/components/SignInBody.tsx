@@ -25,9 +25,11 @@ const SignInBody = () => {
         email: form.email,
         password: form.password,
       });
-      if (result?.ok) {
-        router.push("/main");
+      if (!result || !result.ok) {
+        window.alert("Fail to sign in... try again.");
+        return;
       }
+      router.push("/main");
     } catch (error) {
       if (error instanceof Error) {
         window.alert(error.message);
