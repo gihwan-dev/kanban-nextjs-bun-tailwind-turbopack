@@ -8,7 +8,7 @@ const SuccessModal = () => {
   const [mount, setMount] = useState(false);
   useEffect(() => {
     setMount(true);
-  });
+  }, []);
   return mount
     ? createPortal(
         <Modal onBackdropClick={() => {}}>

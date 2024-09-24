@@ -78,7 +78,7 @@ const MainHeaderNavRoot: React.FC<{}> = () => {
       setNav(initialNavState);
       router.push(`/main/${boards[0].board_id}`);
     }
-  }, [boards]);
+  }, [boards, params.id, navStateData.selectedBoard.title, router, setNav]);
 
   const iconClickHandler = () => {
     setOpenMenu(prev => !prev);

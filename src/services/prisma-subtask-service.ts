@@ -1,3 +1,5 @@
+import prisma from "@/lib/prisma";
+
 export const getTasksSubTask = async (taskId: number) => {
   return prisma.subTask.findMany({
     where: {

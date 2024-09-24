@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 
 import { MainHeaderNavRoot } from "@/features/main";
 import { getServerSession } from "next-auth";
-import { option } from "../api/auth/[...nextauth]/route";
+import { option } from "../api/auth/[...nextauth]/options";
 import BigScreenSideBar from "@/components/BigScreenSideBar";
 
 export const metadata: Metadata = {
